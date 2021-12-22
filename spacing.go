@@ -6,6 +6,7 @@ import (
 	textTemplate "text/template"
 )
 
+// SpacingHelpers returns a text template FuncMap with spacing related functions
 func SpacingHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"space": func(count ...int) string {
@@ -25,6 +26,7 @@ func SpacingHelpers() textTemplate.FuncMap {
 	}
 }
 
+// SpacingHelpersHTML returns a HTML template FuncMap with spacing related functions
 func SpacingHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(SpacingHelpers())
 }

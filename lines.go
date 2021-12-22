@@ -9,6 +9,7 @@ import (
 	textTemplate "text/template"
 )
 
+// LineHelpers returns a text template FuncMap with functions related to line processing
 func LineHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"line":                lineFunc,
@@ -24,6 +25,7 @@ func LineHelpers() textTemplate.FuncMap {
 	}
 }
 
+// LineHelpersHTML returns a HTML template FuncMap with functions related to line processing
 func LineHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(LineHelpers())
 }
