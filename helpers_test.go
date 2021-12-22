@@ -6,7 +6,7 @@ import (
 	"text/template"
 )
 
-func executeTemplateWithFuncmap(funcMap template.FuncMap, input string, data interface{}) (string, error) {
+func executeTemplateWithFuncMap(funcMap template.FuncMap, input string, data interface{}) (string, error) {
 	var outputBuffer bytes.Buffer
 
 	t, err := template.New("tmpl").Funcs(funcMap).Parse(input)
@@ -24,7 +24,7 @@ func executeTemplateWithFuncmap(funcMap template.FuncMap, input string, data int
 	return output, nil
 }
 
-func executeTemplateWithHTMLFuncmap(funcMap htmlTemplate.FuncMap, input string, data interface{}) (string, error) {
+func executeTemplateWithHTMLFuncMap(funcMap htmlTemplate.FuncMap, input string, data interface{}) (string, error) {
 	var outputBuffer bytes.Buffer
 
 	t, err := htmlTemplate.New("tmpl").Funcs(funcMap).Parse(input)
