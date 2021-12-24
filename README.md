@@ -6,5 +6,6 @@ Go module with some useful template.FuncMap goodies
 
 ## Areas of concern
 
-* **Spacing** (`newline` and `space`)
-* **Lines** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
+* **[Spacing](spacing.go)** (`newline` and `space`)
+* **[Lines](lines.go)** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
+* **[Exec](exec.go)** (command execution and output capturing)
