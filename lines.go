@@ -74,7 +74,6 @@ func trimFunc(input string) string {
 
 	// leading
 	for i, l := range lines {
-		fmt.Println("line ", i, l)
 		if strings.TrimSpace(l) != "" {
 			break
 		}
