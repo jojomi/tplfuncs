@@ -156,6 +156,24 @@ Line 3`,
 	assrt.Equal(expected, out)
 }
 
+func TestSkipHead(t *testing.T) {
+	assrt := assert.New(t)
+
+	input := "{{- .input | skipHead 2 -}}"
+	expected := `Line 3`
+
+	funcMap := MakeFuncMap(LineHelpers())
+	data := map[string]string{
+		"input": `Line 1
+Line 2
+Line 3`,
+	}
+
+	out, err := executeTemplateWithFuncMap(funcMap, input, data)
+	assrt.Nil(err, "skipHead function not loaded")
+	assrt.Equal(expected, out)
+}
+
 func TestTail(t *testing.T) {
 	assrt := assert.New(t)
 
