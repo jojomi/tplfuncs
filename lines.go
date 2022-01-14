@@ -16,6 +16,7 @@ func LineHelpers() textTemplate.FuncMap {
 		"lineOrErr":           lineOrErrFunc,
 		"head":                headFunc,
 		"tail":                tailFunc,
+		"skipTail":            skipTailFunc,
 		"trim":                trimFunc,
 		"trimAll":             trimAllFunc,
 		"withoutLineComments": withoutLineCommentsFunc,
@@ -59,6 +60,14 @@ func tailFunc(count int, input string) string {
 	lines := getLines(input)
 	if count < len(lines) {
 		lines = lines[len(lines)-count:]
+	}
+	return asString(lines)
+}
+
+func skipTailFunc(count int, input string) string {
+	lines := getLines(input)
+	if count < len(lines) {
+		lines = lines[0 : len(lines)-count]
 	}
 	return asString(lines)
 }
