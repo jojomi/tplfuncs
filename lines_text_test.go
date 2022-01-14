@@ -210,3 +210,23 @@ Line 3`,
 	assrt.Nil(err, "skipTail function not loaded")
 	assrt.Equal(expected, out)
 }
+
+func TestRegexpReplaceLine(t *testing.T) {
+	assrt := assert.New(t)
+
+	input := `{{- .input | regexpReplaceLine "text (\\d+)" "$1" -}}`
+	expected := `13
+2
+text`
+
+	funcMap := MakeFuncMap(LineHelpers())
+	data := map[string]string{
+		"input": `text 13
+text 2
+text`,
+	}
+
+	out, err := executeTemplateWithFuncMap(funcMap, input, data)
+	assrt.Nil(err, "regexpReplaceLine function not loaded")
+	assrt.Equal(expected, out)
+}

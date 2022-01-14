@@ -24,6 +24,7 @@ func LineHelpers() textTemplate.FuncMap {
 		"withoutEmptyLines":   withoutEmptyLinesFunc,
 		"match":               matchFunc,
 		"notMatch":            notMatchFunc,
+		"regexpReplaceLine":   regexpReplaceLineFunc,
 	}
 }
 
@@ -166,4 +167,15 @@ func getLines(input string) []string {
 
 func asString(lines []string) string {
 	return strings.Join(lines, "\n")
+}
+
+func regexpReplaceLineFunc(regExp, replacement, input string) string {
+	lines := getLines(input)
+	r := regexp.MustCompile(regExp)
+
+	for i, line := range lines {
+		lines[i] = r.ReplaceAllString(line, replacement)
+	}
+
+	return asString(lines)
 }
