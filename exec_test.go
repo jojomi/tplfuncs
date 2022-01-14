@@ -31,8 +31,8 @@ func TestExecTemplate(t *testing.T) {
 	funcMap := MakeHTMLFuncMap(ExecHelpersHTML())
 	emptyData := struct{}{}
 
-	input := `a {{- exec "/bin/echo test" -}} b`
-	expected := `atest
+	input := `a {{ exec "/bin/echo test" -}} b`
+	expected := `a test
 b`
 
 	output, err := executeTemplateWithHTMLFuncMap(funcMap, input, emptyData)

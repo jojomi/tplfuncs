@@ -25,7 +25,7 @@ func LineHelpers() textTemplate.FuncMap {
 	}
 }
 
-// LineHelpersHTML returns a HTML template FuncMap with functions related to line processing
+// LineHelpersHTML returns an HTML template FuncMap with functions related to line processing
 func LineHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(LineHelpers())
 }

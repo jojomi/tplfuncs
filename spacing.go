@@ -26,7 +26,7 @@ func SpacingHelpers() textTemplate.FuncMap {
 	}
 }
 
-// SpacingHelpersHTML returns a HTML template FuncMap with spacing related functions
+// SpacingHelpersHTML returns an HTML template FuncMap with spacing related functions
 func SpacingHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(SpacingHelpers())
 }

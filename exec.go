@@ -14,7 +14,7 @@ func ExecHelpers() textTemplate.FuncMap {
 	}
 }
 
-// ExecHelpersHTML returns a HTML template FuncMap with functions related to command execution
+// ExecHelpersHTML returns an HTML template FuncMap with functions related to command execution
 func ExecHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(ExecHelpers())
 }
