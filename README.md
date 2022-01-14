@@ -3,6 +3,7 @@
 # tplfuncs
 Go module with some useful template.FuncMap goodies
 
+[Documentation](https://pkg.go.dev/github.com/jojomi/tplfuncs)
 
 ## Areas of concern
 
