@@ -230,3 +230,24 @@ text`,
 	assrt.Nil(err, "regexpReplaceLine function not loaded")
 	assrt.Equal(expected, out)
 }
+
+func TestWrapLines(t *testing.T) {
+	assrt := assert.New(t)
+
+	input := `{{- .input | wrapLines "(" ")" -}}`
+	expected := `(Line 1)
+(Line 2)
+(Line 3)`
+
+	funcMap := MakeFuncMap(LineHelpers())
+	data := map[string]string{
+		"input": `Line 1
+Line 2
+Line 3`,
+	}
+
+	out, err := executeTemplateWithFuncMap(funcMap, input, data)
+	assrt.Nil(err, "wrapLines function not loaded")
+	assrt.Equal(expected, out)
+}
+

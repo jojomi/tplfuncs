@@ -20,6 +20,7 @@ func LineHelpers() textTemplate.FuncMap {
 		"skipTail":            skipTailFunc,
 		"trim":                trimFunc,
 		"trimAll":             trimAllFunc,
+		"wrapLines":           wrapLinesFunc,
 		"withoutLineComments": withoutLineCommentsFunc,
 		"withoutEmptyLines":   withoutEmptyLinesFunc,
 		"match":               matchFunc,
@@ -154,6 +155,14 @@ func withoutEmptyLinesFunc(input string) string {
 
 func withoutLineCommentsFunc(input string) string {
 	return notMatchFunc(`^\s*(//|#)`, input)
+}
+
+func wrapLinesFunc(leading, trailing, input string) string {
+	lines := getLines(input)
+	for i, line := range lines {
+		lines[i] = leading + line + trailing
+	}
+	return asString(lines)
 }
 
 func getLines(input string) []string {
