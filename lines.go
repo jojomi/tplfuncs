@@ -21,6 +21,7 @@ func LineHelpers() textTemplate.FuncMap {
 		"trim":                trimFunc,
 		"trimAll":             trimAllFunc,
 		"wrapLines":           wrapLinesFunc,
+		"joinText":            joinTextFunc,
 		"withoutLineComments": withoutLineCommentsFunc,
 		"withoutEmptyLines":   withoutEmptyLinesFunc,
 		"match":               matchFunc,
@@ -163,6 +164,28 @@ func wrapLinesFunc(leading, trailing, input string) string {
 		lines[i] = leading + line + trailing
 	}
 	return asString(lines)
+}
+
+func joinTextFunc(delim, twoDelim, lastDelim, input string) string {
+	lines := getLines(input)
+	var result strings.Builder
+	for i, line := range lines {
+		result.WriteString(line)
+
+		// delims
+		if i == 0 && len(lines) == 2 {
+			result.WriteString(twoDelim)
+			continue
+		}
+		if i < len(lines)-2 {
+			result.WriteString(delim)
+			continue
+		}
+		if i == len(lines)-2 {
+			result.WriteString(lastDelim)
+		}
+	}
+	return result.String()
 }
 
 func getLines(input string) []string {
