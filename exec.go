@@ -1,7 +1,9 @@
 package tplfuncs
 
 import (
+	"github.com/juju/errors"
 	htmlTemplate "html/template"
+	"os"
 	"os/exec"
 	"strings"
 	textTemplate "text/template"
@@ -21,9 +23,16 @@ func ExecHelpersHTML() htmlTemplate.FuncMap {
 
 func execFunc(command string) (string, error) {
 	parts := strings.Fields(command)
-	out, err := exec.Command(parts[0], parts[1:]...).CombinedOutput()
+
+	var err error
+	cmd := exec.Command(parts[0], parts[1:]...)
+	cmd.Dir, err = os.UserHomeDir()
 	if err != nil {
 		return "", err
+	}
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		return "", errors.Annotatef(err, "Output: "+string(out))
 	}
 	return string(out), nil
 }
