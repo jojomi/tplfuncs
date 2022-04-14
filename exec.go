@@ -32,7 +32,7 @@ func execWdFunc(command, workingDir string) (string, error) {
 	cmd.Dir = workingDir
 	out, err := cmd.CombinedOutput()
 	if err != nil {
-		return "", errors.Annotatef(err, "Output: "+string(out))
+		return "", errors.Annotatef(err, "Working Dir: %s, Output: %s", workingDir, string(out))
 	}
 	return string(out), nil
 }
