@@ -9,4 +9,5 @@ Go module with some useful template.FuncMap goodies
 
 * **[Spacing](spacing.go)** (`newline` and `space`)
 * **[Lines](lines.go)** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
+* **[Filesystem](fs.go)** (`include` and `glob`)
 * **[Exec](exec.go)** (command execution and output capturing)
