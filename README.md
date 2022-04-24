@@ -11,3 +11,7 @@ Go module with some useful template.FuncMap goodies
 * **[Lines](lines.go)** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
 * **[Filesystem](fs.go)** (`include` and `glob`)
 * **[Exec](exec.go)** (command execution and output capturing)
+
+## Who uses it?
+
+[io](https://github.com/jojomi/io)
