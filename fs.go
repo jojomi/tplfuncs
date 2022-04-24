@@ -10,12 +10,14 @@ import (
 // FilesystemHelpers returns a text template FuncMap with functions related to filesystems
 func FilesystemHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"glob":    globFunc,
-		"include": includeFunc,
+		"glob":                globFunc,
+		"include":             includeFunc,
+		"saveToFile":          saveToFileFunc,
+		"saveToFileWithPerms": saveToFileWithPermsFunc,
 	}
 }
 
-// FilesystemHTML returns an HTML template FuncMap with functions related to filesystems
+// FilesystemHelpersHTML returns an HTML template FuncMap with functions related to filesystems
 func FilesystemHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(LineHelpers())
 }
@@ -27,4 +29,12 @@ func globFunc(pattern string) ([]string, error) {
 func includeFunc(filename string) (string, error) {
 	b, err := os.ReadFile(filename)
 	return string(b), err
+}
+
+func saveToFileFunc(filename, content string) error {
+	return saveToFileWithPermsFunc(filename, os.FileMode(0640), content)
+}
+
+func saveToFileWithPermsFunc(filename string, permissions os.FileMode, content string) error {
+	return os.WriteFile(filename, []byte(content), permissions)
 }
