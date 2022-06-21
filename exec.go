@@ -1,12 +1,13 @@
 package tplfuncs
 
 import (
-	"github.com/juju/errors"
 	htmlTemplate "html/template"
 	"os"
 	"os/exec"
-	"strings"
 	textTemplate "text/template"
+
+	"github.com/juju/errors"
+	"github.com/kballard/go-shellquote"
 )
 
 // ExecHelpers returns a text template FuncMap with functions related to command execution
@@ -25,9 +26,11 @@ func ExecHelpersHTML() htmlTemplate.FuncMap {
 }
 
 func execWdFunc(command, workingDir string) (string, error) {
-	parts := strings.Fields(command)
+	parts, err := shellquote.Split(command)
+	if err != nil {
+		return "", err
+	}
 
-	var err error
 	cmd := exec.Command(parts[0], parts[1:]...)
 	cmd.Dir = workingDir
 	out, err := cmd.CombinedOutput()

@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/juju/errors v0.0.0-20220331221717-b38fca44723b
+	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/stretchr/testify v1.7.1
 )
 
