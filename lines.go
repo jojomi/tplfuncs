@@ -12,6 +12,7 @@ import (
 // LineHelpers returns a text template FuncMap with functions related to line processing
 func LineHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
+		"getLines":            getLines,
 		"line":                lineFunc,
 		"lineOrErr":           lineOrErrFunc,
 		"head":                headFunc,
