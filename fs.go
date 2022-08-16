@@ -14,12 +14,16 @@ func FilesystemHelpers() textTemplate.FuncMap {
 		"include":             includeFunc,
 		"saveToFile":          saveToFileFunc,
 		"saveToFileWithPerms": saveToFileWithPermsFunc,
+		"fileExists":          fileExistsFunc,
+		"dirExists":           dirExistsFunc,
+		"isMinFileSizeFunc":   isMinFileSizeFunc,
+		"printFile":           printFileFunc,
 	}
 }
 
 // FilesystemHelpersHTML returns an HTML template FuncMap with functions related to filesystems
 func FilesystemHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(LineHelpers())
+	return htmlTemplate.FuncMap(FilesystemHelpers())
 }
 
 func globFunc(pattern string) ([]string, error) {
