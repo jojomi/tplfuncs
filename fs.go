@@ -1,6 +1,8 @@
 package tplfuncs
 
 import (
+	"errors"
+	"github.com/mitchellh/go-homedir"
 	htmlTemplate "html/template"
 	"os"
 	"path/filepath"
@@ -41,4 +43,47 @@ func saveToFileFunc(filename, content string) error {
 
 func saveToFileWithPermsFunc(filename string, permissions os.FileMode, content string) error {
 	return os.WriteFile(filename, []byte(content), permissions)
+}
+
+func fileExistsFunc(filename string) bool {
+	fileInfo, err := os.Stat(filename)
+
+	if errors.Is(err, os.ErrNotExist) {
+		return false
+	}
+
+	return !fileInfo.IsDir()
+}
+
+func dirExistsFunc(filename string) bool {
+	fileInfo, err := os.Stat(filename)
+
+	if errors.Is(err, os.ErrNotExist) {
+		return false
+	}
+
+	return fileInfo.IsDir()
+}
+
+func isMinFileSizeFunc(filename string, minBytes int64) bool {
+	if !fileExistsFunc(filename) {
+		return false
+	}
+
+	fileInfo, err := os.Stat(filename)
+	if err != nil {
+		panic(err)
+	}
+
+	return fileInfo.Size() > minBytes
+}
+
+func printFileFunc(filename string) (string, error) {
+	f, err := homedir.Expand(filename)
+	if err != nil {
+		return "", err
+	}
+
+	data, err := os.ReadFile(f)
+	return string(data), err
 }
