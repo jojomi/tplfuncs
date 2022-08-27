@@ -28,11 +28,6 @@ func OutputHelpersHTML() htmlTemplate.FuncMap {
 }
 
 func printfLocalized(key message.Reference, data ...interface{}) (string, error) {
-	_, err := locale.GetLocales()
-	if err != nil {
-		return "", err
-	}
-	/// fmt.Println(message.MatchLanguage(userLocales...))
 	lang, err := jibber_jabber.DetectLanguage()
 	if err != nil {
 		return "", err
