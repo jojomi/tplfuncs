@@ -37,7 +37,7 @@ Line 3`
 	assrt.NotNil(err)
 }
 
-func TestTrim(t *testing.T) {
+func TestTrimLines(t *testing.T) {
 	assrt := assert.New(t)
 
 	input := `
@@ -50,7 +50,7 @@ Line 3
 Line 2
 Line 3  `
 
-	assrt.Equal(expected, trimFunc(input))
+	assrt.Equal(expected, trimLinesFunc(input))
 }
 
 func TestTrimAll(t *testing.T) {
@@ -249,44 +249,4 @@ Line 3`,
 	out, err := executeTemplateWithFuncMap(funcMap, input, data)
 	assrt.Nil(err, "wrapLines function not loaded")
 	assrt.Equal(expected, out)
-}
-
-func TestJoinText(t *testing.T) {
-	assrt := assert.New(t)
-
-	tests := []struct {
-		data     map[string]string
-		expected string
-	}{
-		{
-			data: map[string]string{
-				"input": `Line 1
-Line 2
-Line 3`,
-			},
-			expected: `Line 1, Line 2, and Line 3`,
-		},
-		{
-			data: map[string]string{
-				"input": `Line 1
-Line 2`,
-			},
-			expected: `Line 1 and Line 2`,
-		},
-		{
-			data: map[string]string{
-				"input": `Line 1`,
-			},
-			expected: `Line 1`,
-		},
-	}
-
-	input := `{{- .input | joinText ", " " and " ", and " -}}`
-	funcMap := MakeFuncMap(LineHelpers())
-
-	for _, tt := range tests {
-		out, err := executeTemplateWithFuncMap(funcMap, input, tt.data)
-		assrt.Nil(err, "joinText function not loaded")
-		assrt.Equal(tt.expected, out)
-	}
 }

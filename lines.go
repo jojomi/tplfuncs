@@ -5,6 +5,7 @@ import (
 	"fmt"
 	htmlTemplate "html/template"
 	"regexp"
+	"sort"
 	"strings"
 	textTemplate "text/template"
 )
@@ -19,15 +20,16 @@ func LineHelpers() textTemplate.FuncMap {
 		"skipHead":            skipHeadFunc,
 		"tail":                tailFunc,
 		"skipTail":            skipTailFunc,
-		"trim":                trimFunc,
+		"sortLines":           sortLinesFunc,
+		"trimLines":           trimLinesFunc,
 		"trimAll":             trimAllFunc,
 		"wrapLines":           wrapLinesFunc,
-		"joinText":            joinTextFunc,
 		"withoutLineComments": withoutLineCommentsFunc,
 		"withoutEmptyLines":   withoutEmptyLinesFunc,
 		"match":               matchFunc,
 		"notMatch":            notMatchFunc,
 		"regexpReplaceLine":   regexpReplaceLineFunc,
+		"joinLines":           asString,
 	}
 }
 
@@ -51,6 +53,12 @@ func lineFunc(number int, input string) string {
 		return ""
 	}
 	return lines[number-1]
+}
+
+func sortLinesFunc(input string) string {
+	lines := getLines(input)
+	sort.Strings(lines)
+	return asString(lines)
 }
 
 func headFunc(count int, input string) string {
@@ -86,7 +94,7 @@ func skipTailFunc(count int, input string) string {
 }
 
 // remove leading and trailing empty lines
-func trimFunc(input string) string {
+func trimLinesFunc(input string) string {
 	lines := getLines(input)
 
 	var (
@@ -165,28 +173,6 @@ func wrapLinesFunc(leading, trailing, input string) string {
 		lines[i] = leading + line + trailing
 	}
 	return asString(lines)
-}
-
-func joinTextFunc(delim, twoDelim, lastDelim, input string) string {
-	lines := getLines(input)
-	var result strings.Builder
-	for i, line := range lines {
-		result.WriteString(line)
-
-		// delims
-		if i == 0 && len(lines) == 2 {
-			result.WriteString(twoDelim)
-			continue
-		}
-		if i < len(lines)-2 {
-			result.WriteString(delim)
-			continue
-		}
-		if i == len(lines)-2 {
-			result.WriteString(lastDelim)
-		}
-	}
-	return result.String()
 }
 
 func getLines(input string) []string {
