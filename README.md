@@ -11,6 +11,7 @@ Go module with some useful template.FuncMap goodies
 * **[Lines](lines.go)** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
 * **[Filesystem](fs.go)** (`include` and `glob`)
 * **[Exec](exec.go)** (command execution and output capturing)
+* **[Strings](string.go)** (string casing, making safe filenames and URLs, `stringContains`)
 
 ## Who uses it?
 

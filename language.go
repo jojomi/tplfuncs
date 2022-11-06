@@ -1,22 +1,26 @@
 package tplfuncs
 
 import (
+	"github.com/jojomi/tplfuncs/text"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
 )
 
-// LanguageHelpers returns a text template FuncMap with functions related to human language
-func LanguageHelpers() textTemplate.FuncMap {
+// TextHelpers returns a text template FuncMap with functions related to text
+func TextHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"plural":      pluralFunc,
 		"pluralInt64": pluralInt64Func,
 		"pluralFloat": pluralFloatFunc,
+
+		"joinText":         text.Join,
+		"joinTextStringer": text.JoinStringer,
 	}
 }
 
-// LanguageHelpersHTML returns an HTML template FuncMap with functions related to human language
-func LanguageHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(LanguageHelpers())
+// TextHelpersHTML returns an HTML template FuncMap with functions related to text
+func TextHelpersHTML() htmlTemplate.FuncMap {
+	return htmlTemplate.FuncMap(TextHelpers())
 }
 
 func pluralFunc(value int, singular, plural string) string {
