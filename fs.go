@@ -2,7 +2,6 @@ package tplfuncs
 
 import (
 	"errors"
-	"github.com/mitchellh/go-homedir"
 	htmlTemplate "html/template"
 	"os"
 	"path/filepath"
@@ -12,14 +11,11 @@ import (
 // FilesystemHelpers returns a text template FuncMap with functions related to filesystems
 func FilesystemHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"glob":                globFunc,
-		"include":             includeFunc,
-		"saveToFile":          saveToFileFunc,
-		"saveToFileWithPerms": saveToFileWithPermsFunc,
-		"fileExists":          fileExistsFunc,
-		"dirExists":           dirExistsFunc,
-		"isMinFileSizeFunc":   isMinFileSizeFunc,
-		"printFile":           printFileFunc,
+		"glob":              globFunc,
+		"fileExists":        fileExistsFunc,
+		"dirExists":         dirExistsFunc,
+		"ensureDir":         ensureDirFunc,
+		"isMinFileSizeFunc": isMinFileSizeFunc,
 	}
 }
 
@@ -32,19 +28,6 @@ func globFunc(pattern string) ([]string, error) {
 	return filepath.Glob(pattern)
 }
 
-func includeFunc(filename string) (string, error) {
-	b, err := os.ReadFile(filename)
-	return string(b), err
-}
-
-func saveToFileFunc(filename, content string) error {
-	return saveToFileWithPermsFunc(filename, os.FileMode(0640), content)
-}
-
-func saveToFileWithPermsFunc(filename string, permissions os.FileMode, content string) error {
-	return os.WriteFile(filename, []byte(content), permissions)
-}
-
 func fileExistsFunc(filename string) bool {
 	fileInfo, err := os.Stat(filename)
 
@@ -55,14 +38,22 @@ func fileExistsFunc(filename string) bool {
 	return !fileInfo.IsDir()
 }
 
-func dirExistsFunc(filename string) bool {
-	fileInfo, err := os.Stat(filename)
+func dirExistsFunc(dirname string) bool {
+	fileInfo, err := os.Stat(dirname)
 
 	if errors.Is(err, os.ErrNotExist) {
 		return false
 	}
 
 	return fileInfo.IsDir()
+}
+
+func ensureDirFunc(dirname string) error {
+	if dirExistsFunc(dirname) {
+		return nil
+	}
+
+	return os.MkdirAll(dirname, 0750)
 }
 
 func isMinFileSizeFunc(filename string, minBytes int64) bool {
@@ -76,14 +67,4 @@ func isMinFileSizeFunc(filename string, minBytes int64) bool {
 	}
 
 	return fileInfo.Size() > minBytes
-}
-
-func printFileFunc(filename string) (string, error) {
-	f, err := homedir.Expand(filename)
-	if err != nil {
-		return "", err
-	}
-
-	data, err := os.ReadFile(f)
-	return string(data), err
 }

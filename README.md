@@ -9,10 +9,10 @@ Go module with some useful template.FuncMap goodies
 
 * **[Spacing](spacing.go)** (`newline` and `space`)
 * **[Lines](lines.go)** (line-wise processing of input string using `trim`, `head`, `tail`, and more)
-* **[Filesystem](fs.go)** (`include` and `glob`)
+* **[Filesystem](fs.go)** (`glob`, `ensureDir`, `fileExists`, `dirExists`, `ensureDir`, `isMinFileSize`)
 * **[Exec](exec.go)** (command execution and output capturing)
 * **[Strings](string.go)** (string casing, making safe filenames and URLs, `stringContains`)
-* **[IO](io.go)** (`readFile`, `writeFile`)
+* **[IO](io.go)** (`readFile`, `include`, `writeFile`)
 * **[Hashing](hash.go)** (`sha1`, `sha256`)
 
 ## Who uses it?
