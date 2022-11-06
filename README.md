@@ -13,6 +13,7 @@ Go module with some useful template.FuncMap goodies
 * **[Exec](exec.go)** (command execution and output capturing)
 * **[Strings](string.go)** (string casing, making safe filenames and URLs, `stringContains`)
 * **[IO](io.go)** (`readFile`, `writeFile`)
+* **[Hashing](hash.go)** (`sha1`, `sha256`)
 
 ## Who uses it?
 
