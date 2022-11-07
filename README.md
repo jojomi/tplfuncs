@@ -14,6 +14,7 @@ Go module with some useful template.FuncMap goodies
 * **[Strings](string.go)** (string casing, making safe filenames and URLs, `stringContains`)
 * **[IO](io.go)** (`readFile`, `include`, `writeFile`)
 * **[Hashing](hash.go)** (`sha1`, `sha256`)
+* **[Env](env.go)** (`envIsSet`, `env`, `envEq`)
 
 ## Who uses it?
 
