@@ -15,6 +15,7 @@ Go module with some useful template.FuncMap goodies
 * **[IO](io.go)** (`readFile`, `include`, `writeFile`)
 * **[Hashing](hash.go)** (`sha1`, `sha256`)
 * **[Env](env.go)** (`envIsSet`, `env`, `envEq`)
+* **[HTML](heml.go)** (`safeHTML`, `safeCSS`, `safeJS`)
 
 ## Who uses it?
 
