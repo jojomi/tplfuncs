@@ -36,5 +36,10 @@ func writeFileFunc(filename, content string) error {
 }
 
 func writeFileWithPermsFunc(filename string, permissions os.FileMode, content string) error {
-	return os.WriteFile(filename, []byte(content), permissions)
+	f, err := homedir.Expand(filename)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(f, []byte(content), permissions)
 }
