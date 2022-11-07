@@ -2,11 +2,14 @@ package tplfuncs
 
 import (
 	"errors"
+	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
-	"path/filepath"
 	textTemplate "text/template"
 )
+
+// Fs is the filesystem abstraction to be used
+var Fs = afero.NewOsFs()
 
 // FilesystemHelpers returns a text template FuncMap with functions related to filesystems
 func FilesystemHelpers() textTemplate.FuncMap {
@@ -25,11 +28,11 @@ func FilesystemHelpersHTML() htmlTemplate.FuncMap {
 }
 
 func globFunc(pattern string) ([]string, error) {
-	return filepath.Glob(pattern)
+	return afero.Glob(Fs, pattern)
 }
 
 func fileExistsFunc(filename string) bool {
-	fileInfo, err := os.Stat(filename)
+	fileInfo, err := Fs.Stat(filename)
 
 	if errors.Is(err, os.ErrNotExist) {
 		return false
@@ -39,7 +42,7 @@ func fileExistsFunc(filename string) bool {
 }
 
 func dirExistsFunc(dirname string) bool {
-	fileInfo, err := os.Stat(dirname)
+	fileInfo, err := Fs.Stat(dirname)
 
 	if errors.Is(err, os.ErrNotExist) {
 		return false
@@ -53,7 +56,7 @@ func ensureDirFunc(dirname string) error {
 		return nil
 	}
 
-	return os.MkdirAll(dirname, 0750)
+	return Fs.MkdirAll(dirname, 0750)
 }
 
 func isMinFileSizeFunc(filename string, minBytes int64) bool {
@@ -61,7 +64,7 @@ func isMinFileSizeFunc(filename string, minBytes int64) bool {
 		return false
 	}
 
-	fileInfo, err := os.Stat(filename)
+	fileInfo, err := Fs.Stat(filename)
 	if err != nil {
 		panic(err)
 	}

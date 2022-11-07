@@ -2,6 +2,7 @@ package tplfuncs
 
 import (
 	"github.com/mitchellh/go-homedir"
+	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
 	textTemplate "text/template"
@@ -27,7 +28,7 @@ func readFileFunc(filename string) (string, error) {
 		return "", err
 	}
 
-	out, err := os.ReadFile(f)
+	out, err := afero.ReadFile(Fs, f)
 	return string(out), err
 }
 
@@ -41,5 +42,5 @@ func writeFileWithPermsFunc(filename string, permissions os.FileMode, content st
 		return err
 	}
 
-	return os.WriteFile(f, []byte(content), permissions)
+	return afero.WriteFile(Fs, f, []byte(content), permissions)
 }
