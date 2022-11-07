@@ -2,6 +2,7 @@ package tplfuncs
 
 import (
 	"errors"
+	"fmt"
 	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
@@ -59,15 +60,15 @@ func ensureDirFunc(dirname string) error {
 	return Fs.MkdirAll(dirname, 0750)
 }
 
-func isMinFileSizeFunc(filename string, minBytes int64) bool {
+func isMinFileSizeFunc(minBytes int64, filename string) (bool, error) {
 	if !fileExistsFunc(filename) {
-		return false
+		return false, fmt.Errorf("file not found: %s", filename)
 	}
 
 	fileInfo, err := Fs.Stat(filename)
 	if err != nil {
-		panic(err)
+		return false, err
 	}
 
-	return fileInfo.Size() > minBytes
+	return fileInfo.Size() > minBytes, nil
 }

@@ -89,8 +89,8 @@ func Test_IsMinFileSizeFunc(t *testing.T) {
 
 	f, err := Fs.Create(testFilename)
 	asrt.Nil(err)
-	asrt.False(isMinFileSizeFunc(testFilename, 10))
+	asrt.False(isMinFileSizeFunc(10, testFilename))
 
 	f.WriteString("sample file content")
-	asrt.True(isMinFileSizeFunc(testFilename, 10))
+	asrt.True(isMinFileSizeFunc(10, testFilename))
 }
