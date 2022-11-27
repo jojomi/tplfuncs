@@ -6,8 +6,8 @@ import (
 	textTemplate "text/template"
 )
 
-// TextHelpers returns a text template FuncMap with functions related to text
-func TextHelpers() textTemplate.FuncMap {
+// LanguageHelpers returns a text template FuncMap with functions related to human language
+func LanguageHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"plural":      pluralFunc,
 		"pluralInt64": pluralInt64Func,
@@ -18,9 +18,9 @@ func TextHelpers() textTemplate.FuncMap {
 	}
 }
 
-// TextHelpersHTML returns an HTML template FuncMap with functions related to text
-func TextHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(TextHelpers())
+// LanguageHelpersHTML returns an HTML template FuncMap with functions related to text
+func LanguageHelpersHTML() htmlTemplate.FuncMap {
+	return htmlTemplate.FuncMap(LanguageHelpers())
 }
 
 func pluralFunc(value int, singular, plural string) string {
