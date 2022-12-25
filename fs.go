@@ -6,6 +6,9 @@ import (
 	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
+	"path"
+	"path/filepath"
+	"strings"
 	textTemplate "text/template"
 )
 
@@ -20,6 +23,11 @@ func FilesystemHelpers() textTemplate.FuncMap {
 		"dirExists":         dirExistsFunc,
 		"ensureDir":         ensureDirFunc,
 		"isMinFileSizeFunc": isMinFileSizeFunc,
+		"basename":          basenameFunc,
+		"dirname":           dirnameFunc,
+		"ext":               extFunc,
+		"rawExt":            rawExtFunc,
+		"withExt":           withExtFunc,
 	}
 }
 
@@ -30,6 +38,30 @@ func FilesystemHelpersHTML() htmlTemplate.FuncMap {
 
 func globFunc(pattern string) ([]string, error) {
 	return afero.Glob(Fs, pattern)
+}
+
+func basenameFunc(filename string) string {
+	return filepath.Base(filename)
+}
+
+func dirnameFunc(filename string) string {
+	return filepath.Dir(filename)
+}
+
+func extFunc(filename string) string {
+	return filepath.Ext(filename)
+}
+
+func rawExtFunc(filename string) string {
+	return strings.TrimLeft(filepath.Ext(filename), ".")
+}
+
+func withExtFunc(filename, newExt string) string {
+	if !strings.HasPrefix(newExt, ".") {
+		newExt = "." + newExt
+	}
+	ext := path.Ext(filename)
+	return filename[0:len(filename)-len(ext)] + newExt
 }
 
 func fileExistsFunc(filename string) bool {
