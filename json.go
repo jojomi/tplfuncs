@@ -13,6 +13,7 @@ import (
 // JSONHelpers returns a text template FuncMap with json related functions
 func JSONHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
+		"toJSON":              toJSONFunc,
 		"parseJSON":           parseJSONFunc,
 		"jsonPath":            jsonPathFunc,
 		"jsonPathWithDefault": jsonPathWithDefaultFunc,
@@ -22,6 +23,11 @@ func JSONHelpers() textTemplate.FuncMap {
 // JSONHelpersHTML returns an HTML template FuncMap with json related functions
 func JSONHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(JSONHelpers())
+}
+
+func toJSONFunc(input interface{}) (string, error) {
+	b, err := json.Marshal(input)
+	return string(b), err
 }
 
 func parseJSONFunc(jsonString string) (interface{}, error) {
