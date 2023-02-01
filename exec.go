@@ -16,6 +16,7 @@ func ExecHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"exec":       execFunc,
 		"execNoFail": execNoFailFunc,
+		// "execSilent": and all others
 		"execHome": execHomeFunc,
 		"execTemp": execTempFunc,
 		"execWd":   execWdFunc,

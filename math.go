@@ -9,10 +9,11 @@ import (
 // MathHelpers returns a text template FuncMap with math related functions
 func MathHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
+		"floatAdd":   floatAddFunc,
+		"floatSub":   floatSubFunc,
+		"floatMul":   floatMulFunc,
 		"floatDiv":   floatDivFunc,
 		"floatDivBy": floatDivByFunc,
-		"floatAdd":   floatAddFunc,
-		"floatMul":   floatMulFunc,
 	}
 }
 
@@ -54,6 +55,19 @@ func floatAddFunc(values ...float64) float64 {
 	sum := values[0]
 	for _, v := range values[1:] {
 		sum += v
+	}
+
+	return sum
+}
+
+func floatSubFunc(values ...float64) float64 {
+	if len(values) == 0 {
+		return 0.0
+	}
+
+	sum := values[0]
+	for _, v := range values[1:] {
+		sum -= v
 	}
 
 	return sum

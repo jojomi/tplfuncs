@@ -30,6 +30,8 @@ func LineHelpers() textTemplate.FuncMap {
 		"notMatch":            notMatchFunc,
 		"regexpReplaceLine":   regexpReplaceLineFunc,
 		"joinLines":           asString,
+		"indentSpaceLines":    indentSpaceLinesFunc,
+		"indentTabLines":      indentTabLinesFunc,
 	}
 }
 
@@ -171,6 +173,22 @@ func wrapLinesFunc(leading, trailing, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
 		lines[i] = leading + line + trailing
+	}
+	return asString(lines)
+}
+
+func indentSpaceLinesFunc(spaceCount int, input string) string {
+	lines := getLines(input)
+	for i, line := range lines {
+		lines[i] = strings.Repeat(" ", spaceCount) + line
+	}
+	return asString(lines)
+}
+
+func indentTabLinesFunc(tabCount int, input string) string {
+	lines := getLines(input)
+	for i, line := range lines {
+		lines[i] = strings.Repeat("\n", tabCount) + line
 	}
 	return asString(lines)
 }

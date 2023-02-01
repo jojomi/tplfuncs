@@ -1,6 +1,10 @@
 package tplfuncs
 
 import (
+	"fmt"
+	"github.com/hexops/gotextdiff"
+	"github.com/hexops/gotextdiff/myers"
+	"github.com/hexops/gotextdiff/span"
 	"github.com/iancoleman/strcase"
 	htmlTemplate "html/template"
 	"regexp"
@@ -11,7 +15,9 @@ import (
 // StringHelpers returns a text template FuncMap with math related functions
 func StringHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"stringContains": stringContainsFunc,
+		"stringContains":  stringContainsFunc,
+		"stringHasPrefix": stringHasPrefixFunc,
+		"stringHasSuffix": stringHasSuffixFunc,
 		"eqIgnoreCase":   stringEqualFoldFunc,
 		"eqFold":         stringEqualFoldFunc,
 
@@ -27,6 +33,10 @@ func StringHelpers() textTemplate.FuncMap {
 		"toCleanString": stringCleanFunc,
 		"toFilename":    stringToFilenameFunc,
 		"toURL":         stringToURLFunc,
+		"deHTML":        deHTMLFunc,
+
+		// diff
+		"diff": diffFunc,
 	}
 }
 
@@ -41,6 +51,14 @@ func stringEqualFoldFunc(a, b string) bool {
 
 func stringContainsFunc(needle, haystack string) bool {
 	return strings.Contains(haystack, needle)
+}
+
+func stringHasPrefixFunc(prefix, testString string) bool {
+	return strings.HasPrefix(testString, prefix)
+}
+
+func stringHasSuffixFunc(suffix, testString string) bool {
+	return strings.HasSuffix(testString, suffix)
 }
 
 func stringUpperCaseFunc(input string) string {
@@ -80,4 +98,14 @@ func stringToFilenameFunc(input string) string {
 
 func stringToURLFunc(input string) string {
 	return strcase.ToKebab(stringCleanFunc(input))
+}
+
+func diffFunc(nameA, contentA, nameB, contentB string, numContextLines int) string {
+	edits := myers.ComputeEdits(span.URIFromPath(nameA), contentA, contentB)
+	diff := fmt.Sprint(gotextdiff.ToUnified(nameA, nameB, contentA, edits))
+	return diff
+}
+
+func deHTMLFunc(input htmlTemplate.HTML) string {
+	return string(input)
 }
