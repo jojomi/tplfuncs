@@ -12,8 +12,12 @@ import (
 func StringHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"stringContains": stringContainsFunc,
+		"eqIgnoreCase":   stringEqualFoldFunc,
+		"eqFold":         stringEqualFoldFunc,
 
 		// string casing
+		"toUpperCase":      stringUpperCaseFunc,
+		"toLowerCase":      stringLowerCaseFunc,
 		"toCamelCase":      stringCamelCaseFunc,
 		"toLowerCamelCase": stringLowerCamelCaseFunc,
 		"toSnakeCase":      stringSnakeFunc,
@@ -31,8 +35,20 @@ func StringHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(StringHelpers())
 }
 
+func stringEqualFoldFunc(a, b string) bool {
+	return strings.EqualFold(a, b)
+}
+
 func stringContainsFunc(needle, haystack string) bool {
 	return strings.Contains(haystack, needle)
+}
+
+func stringUpperCaseFunc(input string) string {
+	return strings.ToUpper(input)
+}
+
+func stringLowerCaseFunc(input string) string {
+	return strings.ToLower(input)
 }
 
 func stringCamelCaseFunc(input string) string {
