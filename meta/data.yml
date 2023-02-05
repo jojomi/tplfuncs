@@ -1,0 +1,4 @@
+mathTypes:
+  - name: int
+  - name: float
+    value: float64
