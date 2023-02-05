@@ -2,3 +2,10 @@ mathTypes:
   - name: int
   - name: float
     value: float64
+
+defaultTypes:
+  - name: int
+  - name: string
+  - name: float
+    value: float64
+
