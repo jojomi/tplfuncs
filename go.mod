@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/Masterminds/semver v1.5.0
-	github.com/PaesslerAG/gval v1.2.1
+	github.com/PaesslerAG/gval v1.2.2
 	github.com/PaesslerAG/jsonpath v0.1.1
 	github.com/cloudfoundry-attic/jibber_jabber v0.0.0-20151120183258-bcc4c8345a21
 	github.com/hexops/gotextdiff v1.0.3
@@ -16,7 +16,7 @@ require (
 	github.com/spf13/afero v1.9.3
 	github.com/spf13/cast v1.5.0
 	github.com/stretchr/testify v1.8.1
-	golang.org/x/text v0.6.0
+	golang.org/x/text v0.7.0
 )
 
 require (
