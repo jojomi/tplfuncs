@@ -10,7 +10,7 @@ import (
 func DateHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"now":       nowFunc,
-		"parseDate": parseDateFunc(),
+		"parseDate": parseDateFunc,
 	}
 }
 
