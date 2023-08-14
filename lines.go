@@ -32,6 +32,7 @@ func LineHelpers() textTemplate.FuncMap {
 		"joinLines":           asString,
 		"indentSpaceLines":    indentSpaceLinesFunc,
 		"indentTabLines":      indentTabLinesFunc,
+		"prefixLines":         prefixLinesFunc,
 	}
 }
 
@@ -181,6 +182,14 @@ func indentSpaceLinesFunc(spaceCount int, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
 		lines[i] = strings.Repeat(" ", spaceCount) + line
+	}
+	return asString(lines)
+}
+
+func prefixLinesFunc(prefix string, input string) string {
+	lines := getLines(input)
+	for i, line := range lines {
+		lines[i] = prefix + line
 	}
 	return asString(lines)
 }
