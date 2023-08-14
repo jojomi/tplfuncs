@@ -2,6 +2,7 @@ package tplfuncs
 
 import (
 	"fmt"
+	"github.com/jojomi/gorun"
 	htmlTemplate "html/template"
 	"os"
 	"os/exec"
@@ -20,6 +21,7 @@ func ExecHelpers() textTemplate.FuncMap {
 		"execHome": execHomeFunc,
 		"execTemp": execTempFunc,
 		"execWd":   execWdFunc,
+		"run":      runFunc,
 	}
 }
 
@@ -84,4 +86,14 @@ func execHomeFunc(command string) (string, error) {
 
 func execTempFunc(command string) (string, error) {
 	return execWdFunc(command, os.TempDir())
+}
+
+func runFunc(command string) (string, error) {
+	r := gorun.NewLocal(command)
+	r = r.LogCommand(true)
+	rr, err := r.Exec()
+	if err != nil {
+		return "", err
+	}
+	return rr.CombinedOutput(), nil
 }
