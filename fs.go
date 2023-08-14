@@ -3,6 +3,7 @@ package tplfuncs
 import (
 	"errors"
 	"fmt"
+	"github.com/jojomi/gofs"
 	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
@@ -18,7 +19,11 @@ var Fs = afero.NewOsFs()
 // FilesystemHelpers returns a text template FuncMap with functions related to filesystems
 func FilesystemHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"glob":              globFunc,
+		"glob": globFunc,
+
+		"fileAt": fileAtFunc,
+		"dirAt":  dirAtFunc,
+
 		"fileExists":        fileExistsFunc,
 		"dirExists":         dirExistsFunc,
 		"ensureDir":         ensureDirFunc,
@@ -38,6 +43,14 @@ func FilesystemHelpersHTML() htmlTemplate.FuncMap {
 
 func globFunc(pattern string) ([]string, error) {
 	return afero.Glob(Fs, pattern)
+}
+
+func fileAtFunc(filePath string) gofs.File {
+	return gofs.FileWithFs(filePath, Fs)
+}
+
+func dirAtFunc(dirPath string) gofs.Dir {
+	return gofs.DirWithFs(dirPath, Fs)
 }
 
 func basenameFunc(filename string) string {
