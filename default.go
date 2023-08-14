@@ -11,6 +11,11 @@ import (
 // DefaultHelpers returns a text template FuncMap with default functions
 func DefaultHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
+		// functions for Bool
+		"firstNonNilBool": firstNonNilBoolFunction,
+		"firstSetBool":    firstNonNilBoolFunction,
+		"defaultBool":     firstNonNilBoolFunction,
+
 		// functions for Int
 		"firstNonNilInt": firstNonNilIntFunction,
 		"firstSetInt":    firstSetIntFunction,
@@ -31,6 +36,26 @@ func DefaultHelpers() textTemplate.FuncMap {
 // DefaultHelpersHTML returns an HTML template FuncMap with default functions
 func DefaultHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(DefaultHelpers())
+}
+
+func firstNonNilBoolFunction(inputs ...any) (bool, error) {
+	var empty bool
+
+	for _, input := range inputs {
+		if input == nil {
+			continue
+		}
+
+		// is it a bool?
+		realValue, ok := input.(bool)
+
+		if !ok {
+			return empty, fmt.Errorf("bad: %v (%t)", input, input)
+		}
+
+		return realValue, nil
+	}
+	return empty, fmt.Errorf("all nil!")
 }
 
 func firstNonNilIntFunction(inputs ...any) (int, error) {

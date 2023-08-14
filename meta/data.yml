@@ -4,6 +4,8 @@ mathTypes:
     value: float64
 
 defaultTypes:
+  - name: bool
+    no_first_set: true
   - name: int
   - name: string
   - name: float
