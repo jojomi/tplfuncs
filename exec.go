@@ -2,11 +2,12 @@ package tplfuncs
 
 import (
 	"fmt"
-	"github.com/jojomi/gorun"
 	htmlTemplate "html/template"
 	"os"
 	"os/exec"
 	textTemplate "text/template"
+
+	"github.com/jojomi/gorun"
 
 	"github.com/juju/errors"
 	"github.com/kballard/go-shellquote"

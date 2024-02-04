@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
-	"github.com/jojomi/tplfuncs/text"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"github.com/jojomi/tplfuncs/text"
 )
 
 // LanguageHelpers returns a text template FuncMap with functions related to human language

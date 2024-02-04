@@ -1,11 +1,13 @@
 package tplfuncs
 
 import (
-	"github.com/mitchellh/go-homedir"
-	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
 	textTemplate "text/template"
+
+	"github.com/jojomi/gofs"
+	"github.com/mitchellh/go-homedir"
+	"github.com/spf13/afero"
 )
 
 // IOHelpers returns a text template FuncMap with io related functions
@@ -23,17 +25,14 @@ func IOHelpersHTML() htmlTemplate.FuncMap {
 }
 
 func readFileFunc(filename string) (string, error) {
-	f, err := homedir.Expand(filename)
-	if err != nil {
-		return "", err
-	}
-
-	out, err := afero.ReadFile(Fs, f)
-	return string(out), err
+	f := gofs.FileWithFs(filename, Fs)
+	out, err := f.ContentString()
+	return out, err
 }
 
 func writeFileFunc(filename, content string) error {
-	return writeFileWithPermsFunc(filename, os.FileMode(0640), content)
+	f := gofs.FileWithFs(filename, Fs)
+	return f.SetContentString(content)
 }
 
 func writeFileWithPermsFunc(filename string, permissions os.FileMode, content string) error {

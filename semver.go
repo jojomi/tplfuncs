@@ -2,10 +2,11 @@ package tplfuncs
 
 import (
 	"fmt"
-	"github.com/Masterminds/semver"
-	"github.com/juju/errors"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"github.com/Masterminds/semver"
+	"github.com/juju/errors"
 )
 
 // SemverHelpers returns a text template FuncMap with semver related functions

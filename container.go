@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
-	"github.com/jojomi/tplfuncs/container"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"github.com/jojomi/tplfuncs/container"
 )
 
 // ContainerHelpers returns a text template FuncMap with functions related to container processing.

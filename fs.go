@@ -3,14 +3,15 @@ package tplfuncs
 import (
 	"errors"
 	"fmt"
-	"github.com/jojomi/gofs"
-	"github.com/spf13/afero"
 	htmlTemplate "html/template"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 	textTemplate "text/template"
+
+	"github.com/jojomi/gofs"
+	"github.com/spf13/afero"
 )
 
 // Fs is the filesystem abstraction to be used
@@ -102,7 +103,7 @@ func ensureDirFunc(dirname string) error {
 		return nil
 	}
 
-	return Fs.MkdirAll(dirname, 0750)
+	return Fs.MkdirAll(dirname, 0o750)
 }
 
 func isMinFileSizeFunc(minBytes int64, filename string) (bool, error) {

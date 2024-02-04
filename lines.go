@@ -135,7 +135,7 @@ func trimAllFunc(input string) string {
 func notMatchFunc(regExp, input string) string {
 	lines := getLines(input)
 	r := regexp.MustCompile(regExp)
-	var result = make([]string, 0)
+	result := make([]string, 0)
 
 	for _, line := range lines {
 		if r.MatchString(line) {
@@ -150,7 +150,7 @@ func notMatchFunc(regExp, input string) string {
 func matchFunc(regExp, input string) string {
 	lines := getLines(input)
 	r := regexp.MustCompile(regExp)
-	var result = make([]string, 0)
+	result := make([]string, 0)
 
 	for _, line := range lines {
 		if !r.MatchString(line) {

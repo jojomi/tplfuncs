@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
-	"github.com/sanity-io/litter"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"github.com/sanity-io/litter"
 )
 
 // GolangHelpers returns a text template FuncMap with golang functions

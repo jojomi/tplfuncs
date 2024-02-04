@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
+	"testing"
+
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_FileExistsFunc(t *testing.T) {
@@ -22,7 +23,7 @@ func Test_FileExistsFunc(t *testing.T) {
 	// create dir
 	err = Fs.Remove(testFilename)
 	asrt.Nil(err)
-	err = Fs.MkdirAll(testFilename, 0700)
+	err = Fs.MkdirAll(testFilename, 0o700)
 	asrt.Nil(err)
 	asrt.False(fileExistsFunc(testFilename))
 }
@@ -36,7 +37,7 @@ func Test_DirExistsFunc(t *testing.T) {
 	asrt.False(dirExistsFunc(testDirname))
 
 	// create dir
-	err := Fs.MkdirAll(testDirname, 0700)
+	err := Fs.MkdirAll(testDirname, 0o700)
 	asrt.Nil(err)
 	asrt.True(dirExistsFunc(testDirname))
 

@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
-	"github.com/spf13/cast"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"github.com/spf13/cast"
 )
 
 // CastHelpers returns a text template FuncMap with cast functions

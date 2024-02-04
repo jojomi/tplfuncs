@@ -1,8 +1,9 @@
 package container
 
 import (
-	"github.com/jojomi/tplfuncs/text"
 	"strings"
+
+	"github.com/jojomi/tplfuncs/text"
 )
 
 // StringList is a slice of strings with functions for manipulating it.

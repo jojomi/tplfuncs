@@ -2,14 +2,15 @@ package tplfuncs
 
 import (
 	"fmt"
-	"github.com/hexops/gotextdiff"
-	"github.com/hexops/gotextdiff/myers"
-	"github.com/hexops/gotextdiff/span"
-	"github.com/iancoleman/strcase"
 	htmlTemplate "html/template"
 	"regexp"
 	"strings"
 	textTemplate "text/template"
+
+	"github.com/hexops/gotextdiff"
+	"github.com/hexops/gotextdiff/myers"
+	"github.com/hexops/gotextdiff/span"
+	"github.com/iancoleman/strcase"
 )
 
 // StringHelpers returns a text template FuncMap with math related functions
@@ -18,8 +19,8 @@ func StringHelpers() textTemplate.FuncMap {
 		"stringContains":  stringContainsFunc,
 		"stringHasPrefix": stringHasPrefixFunc,
 		"stringHasSuffix": stringHasSuffixFunc,
-		"eqIgnoreCase":   stringEqualFoldFunc,
-		"eqFold":         stringEqualFoldFunc,
+		"eqIgnoreCase":    stringEqualFoldFunc,
+		"eqFold":          stringEqualFoldFunc,
 
 		// string casing
 		"toUpperCase":      stringUpperCaseFunc,

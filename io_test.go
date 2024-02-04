@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
+	"testing"
+
 	"github.com/spf13/afero"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func Test_readFileFunc(t *testing.T) {
@@ -31,7 +32,7 @@ func Test_writeFileWithPermsFunc(t *testing.T) {
 	testFilename := "file.log"
 	fileContent := "test file content"
 
-	err := writeFileWithPermsFunc(testFilename, 0600, fileContent)
+	err := writeFileWithPermsFunc(testFilename, 0o600, fileContent)
 	asrt.Nil(err)
 
 	// check

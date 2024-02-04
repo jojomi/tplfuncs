@@ -2,12 +2,12 @@ package tplfuncs
 
 import (
 	"context"
-	"github.com/PaesslerAG/gval"
-	"github.com/PaesslerAG/jsonpath"
+	"encoding/json"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
 
-	"encoding/json"
+	"github.com/PaesslerAG/gval"
+	"github.com/PaesslerAG/jsonpath"
 )
 
 // JSONHelpers returns a text template FuncMap with json related functions
