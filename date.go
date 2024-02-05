@@ -16,7 +16,7 @@ func DateHelpers() textTemplate.FuncMap {
 
 // DateHelpersHTML returns an HTML template FuncMap with date functions
 func DateHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(LineHelpers())
+	return htmlTemplate.FuncMap(DateHelpers())
 }
 
 func nowFunc() time.Time {
