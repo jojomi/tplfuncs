@@ -16,6 +16,7 @@ import (
 // StringHelpers returns a text template FuncMap with math related functions
 func StringHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
+		"trim":            trimFunc,
 		"stringContains":  stringContainsFunc,
 		"stringHasPrefix": stringHasPrefixFunc,
 		"stringHasSuffix": stringHasSuffixFunc,
@@ -39,6 +40,10 @@ func StringHelpers() textTemplate.FuncMap {
 		// diff
 		"diff": diffFunc,
 	}
+}
+
+func trimFunc(input string) string {
+	return strings.TrimSpace(input)
 }
 
 // StringHelpersHTML returns an HTML template FuncMap with math related functions
