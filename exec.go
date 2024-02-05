@@ -22,7 +22,12 @@ func ExecHelpers() textTemplate.FuncMap {
 		"execHome": execHomeFunc,
 		"execTemp": execTempFunc,
 		"execWd":   execWdFunc,
-		"run":      runFunc,
+
+		//"commandExists": commandExistsFunc,
+		"run":              runFunc,
+		"runSSH":           runSSHFunc,
+		"runner":           runnerFunc,
+		"localCommandFrom": localCommandFromFunc,
 	}
 }
 
@@ -90,11 +95,44 @@ func execTempFunc(command string) (string, error) {
 }
 
 func runFunc(command string) (string, error) {
-	r := gorun.NewLocal(command)
-	r = r.LogCommand(true)
+	r := getRunner().WithCommand(gorun.LocalCommandFrom(command))
+
+	if os.Getenv("IO_LOG_RUN_FUNC") == "true" {
+		r = r.LogCommand(true)
+	}
+
 	rr, err := r.Exec()
 	if err != nil {
 		return "", err
 	}
 	return rr.CombinedOutput(), nil
+}
+
+func getRunner() *gorun.Runner {
+	r := gorun.New().WithoutStdout().WithoutStderr()
+
+	if os.Getenv("IO_LOG_RUN_FUNC") == "true" {
+		r = r.LogCommand(true)
+	}
+
+	return r
+}
+
+func runSSHFunc(sshAlias, command string) (string, error) {
+	c := gorun.NewSSHCommandFrom(sshAlias, gorun.LocalCommandFrom(command))
+	r := getRunner().WithCommand(c)
+
+	rr, err := r.Exec()
+	if err != nil {
+		return "", err
+	}
+	return rr.CombinedOutput(), nil
+}
+
+func runnerFunc() *gorun.Runner {
+	return getRunner()
+}
+
+func localCommandFromFunc(command string) *gorun.LocalCommand {
+	return gorun.LocalCommandFrom(command)
 }
