@@ -19,6 +19,7 @@ func YAMLHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(YAMLHelpers())
 }
 
+// Doc: `toYAML` returns the given data YAML encoded.
 func toYAMLFunc(input interface{}) (string, error) {
 	yamlData, err := yaml.Marshal(input)
 	if err != nil {
@@ -28,6 +29,7 @@ func toYAMLFunc(input interface{}) (string, error) {
 	return string(yamlData), nil
 }
 
+// Doc: `parseYAML` decodes the give YAML string.
 func parseYAMLFunc(yamlString string) (interface{}, error) {
 	// unmarshal YAML into a generic interface{}
 	var data interface{}

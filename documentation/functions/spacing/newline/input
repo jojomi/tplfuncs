@@ -1,0 +1,4 @@
+first
+{{- newline -}}
+second and
+{{- newline 3 }} third word

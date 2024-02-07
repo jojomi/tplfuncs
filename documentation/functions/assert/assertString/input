@@ -1,0 +1,2 @@
+{{ assertString .Name }} /* will just continue */
+{{ assertString .Age }} /* will make the template evaluation fail */

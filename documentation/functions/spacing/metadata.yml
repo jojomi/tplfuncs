@@ -1,0 +1,3 @@
+title: Spacing
+description: Functions related to spacing (spaces, newlines). These functions help controlling the space generated in the target string more precisely than the built-in removal options within the template strings ({{- like this -}}).
+source: spacing.go

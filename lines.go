@@ -10,10 +10,10 @@ import (
 	textTemplate "text/template"
 )
 
-// LineHelpers returns a text template FuncMap with functions related to line processing
-func LineHelpers() textTemplate.FuncMap {
+// LinesHelpers returns a text template FuncMap with functions related to line processing
+func LinesHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"getLines":            getLines,
+		"getLines":            getLinesFunc,
 		"line":                lineFunc,
 		"lineOrErr":           lineOrErrFunc,
 		"head":                headFunc,
@@ -36,11 +36,12 @@ func LineHelpers() textTemplate.FuncMap {
 	}
 }
 
-// LineHelpersHTML returns an HTML template FuncMap with functions related to line processing
-func LineHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(LineHelpers())
+// LinesHelpersHTML returns an HTML template FuncMap with functions related to line processing
+func LinesHelpersHTML() htmlTemplate.FuncMap {
+	return htmlTemplate.FuncMap(LinesHelpers())
 }
 
+// Doc: `lineOrErr` returns a single line from the multiline input. The index is 1-based. Returns an error, if the line does not exist.
 func lineOrErrFunc(number int, input string) (string, error) {
 	lines := getLines(input)
 	if number < 1 || number > len(lines) {
@@ -49,7 +50,7 @@ func lineOrErrFunc(number int, input string) (string, error) {
 	return lines[number-1], nil
 }
 
-// 1-based
+// Doc: `line` returns a single line from the multiline input. The index is 1-based. Returns an empty string, if the line does not exist.
 func lineFunc(number int, input string) string {
 	lines := getLines(input)
 	if number < 1 || number > len(lines) {
@@ -58,12 +59,14 @@ func lineFunc(number int, input string) string {
 	return lines[number-1]
 }
 
+// Doc: Return the multiline input sorted alphabetically line by line.
 func sortLinesFunc(input string) string {
 	lines := getLines(input)
 	sort.Strings(lines)
 	return asString(lines)
 }
 
+// Doc: `head` returns the first n lines of a multiline string as one string, or all of it if there is less than n lines in total.
 func headFunc(count int, input string) string {
 	lines := getLines(input)
 	if count < len(lines) {
@@ -72,6 +75,7 @@ func headFunc(count int, input string) string {
 	return asString(lines)
 }
 
+// Doc: `skipHead` returns the multiline string given without the first n lines or an empty string if there is less than n lines in total.
 func skipHeadFunc(count int, input string) string {
 	lines := getLines(input)
 	if count < len(lines) {
@@ -80,6 +84,7 @@ func skipHeadFunc(count int, input string) string {
 	return asString(lines)
 }
 
+// Doc: `tail` returns the last n lines of a multiline string as one string, or all of it if there is less than n lines in total.
 func tailFunc(count int, input string) string {
 	lines := getLines(input)
 	if count < len(lines) {
@@ -88,6 +93,7 @@ func tailFunc(count int, input string) string {
 	return asString(lines)
 }
 
+// Doc: `skipTail` returns the multiline string given without the last n lines or an empty string if there is less than n lines in total.
 func skipTailFunc(count int, input string) string {
 	lines := getLines(input)
 	if count < len(lines) {
@@ -96,7 +102,7 @@ func skipTailFunc(count int, input string) string {
 	return asString(lines)
 }
 
-// remove leading and trailing empty lines
+// Doc: `trimLines` returns the multiline string given without leading and trailing empty lines.
 func trimLinesFunc(input string) string {
 	lines := getLines(input)
 
@@ -124,6 +130,7 @@ func trimLinesFunc(input string) string {
 	return asString(lines[firstContentLine:lastContentLine])
 }
 
+// Doc: `trimAll` returns the multiline string given with leading and trailing space removed for any line individually.
 func trimAllFunc(input string) string {
 	lines := getLines(input)
 	for i, l := range lines {
@@ -132,6 +139,7 @@ func trimAllFunc(input string) string {
 	return asString(lines)
 }
 
+// Doc: `notMatch` does return a string with all lines from the given multiline string that do not match the regexp given.
 func notMatchFunc(regExp, input string) string {
 	lines := getLines(input)
 	r := regexp.MustCompile(regExp)
@@ -147,6 +155,7 @@ func notMatchFunc(regExp, input string) string {
 	return asString(result)
 }
 
+// Doc: `match` does return a string with all lines from the given multiline string that do match the regexp given.
 func matchFunc(regExp, input string) string {
 	lines := getLines(input)
 	r := regexp.MustCompile(regExp)
@@ -162,14 +171,17 @@ func matchFunc(regExp, input string) string {
 	return asString(result)
 }
 
+// Doc: `withoutEmptyLines` returns the multiline string given without empty lines.
 func withoutEmptyLinesFunc(input string) string {
 	return notMatchFunc(`^\s*$`, input)
 }
 
+// Doc: `withoutLineComments` returns the multiline string given without line comments (lines starting with optional whitespace and // or #).
 func withoutLineCommentsFunc(input string) string {
 	return notMatchFunc(`^\s*(//|#)`, input)
 }
 
+// Doc: `wrapLines` returns the multiline string with every single line wrapped with the given leading and trailing string.
 func wrapLinesFunc(leading, trailing, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
@@ -178,6 +190,7 @@ func wrapLinesFunc(leading, trailing, input string) string {
 	return asString(lines)
 }
 
+// Doc: `indentSpaceLines` returns the multiline string given with every line indented by additional n spaces.
 func indentSpaceLinesFunc(spaceCount int, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
@@ -186,6 +199,7 @@ func indentSpaceLinesFunc(spaceCount int, input string) string {
 	return asString(lines)
 }
 
+// Doc: `prefixLines` returns the multiline string given with every line prefixed with the string given.
 func prefixLinesFunc(prefix string, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
@@ -194,12 +208,18 @@ func prefixLinesFunc(prefix string, input string) string {
 	return asString(lines)
 }
 
+// Doc: `indentTabLines` returns the multiline string given with every line indented by additional n tab characters.
 func indentTabLinesFunc(tabCount int, input string) string {
 	lines := getLines(input)
 	for i, line := range lines {
 		lines[i] = strings.Repeat("\n", tabCount) + line
 	}
 	return asString(lines)
+}
+
+// Doc: `getLines` returns the individual lines of a multiline string.
+func getLinesFunc(input string) []string {
+	return getLines(input)
 }
 
 func getLines(input string) []string {
@@ -211,10 +231,12 @@ func getLines(input string) []string {
 	return lines
 }
 
+// Doc: `asString` returns a string separated by newline characters from a string slice.
 func asString(lines []string) string {
 	return strings.Join(lines, "\n")
 }
 
+// Doc: `regexpReplaceLine` returns a string from a multiline string where the regexp given is executed on every single line and the replacement executed if there was one or more matches.
 func regexpReplaceLineFunc(regExp, replacement, input string) string {
 	lines := getLines(input)
 	r := regexp.MustCompile(regExp)

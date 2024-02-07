@@ -23,6 +23,7 @@ func SemverHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(SemverHelpers())
 }
 
+// Doc: `parseSemver` converts a string to a *semver.Version.
 func parseSemverFunc(semverString string) (*semver.Version, error) {
 	s, err := semver.NewVersion(semverString)
 	if err != nil {
@@ -31,6 +32,7 @@ func parseSemverFunc(semverString string) (*semver.Version, error) {
 	return s, nil
 }
 
+// Doc: `semverToMajor` converts a string to the major version part of a *semver.Version.
 func semverToMajorFunc(semverString string) (string, error) {
 	s, err := semver.NewVersion(semverString)
 	if err != nil {
@@ -39,6 +41,7 @@ func semverToMajorFunc(semverString string) (string, error) {
 	return fmt.Sprintf("%d", s.Major()), nil
 }
 
+// Doc: `semverToMinor` converts a string to the major.minor version part of a *semver.Version.
 func semverToMinorFunc(semverString string) (string, error) {
 	s, err := semver.NewVersion(semverString)
 	if err != nil {

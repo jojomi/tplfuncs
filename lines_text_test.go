@@ -145,7 +145,7 @@ func TestHead(t *testing.T) {
 	expected := `Line 1
 Line 2`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `Line 1
 Line 2
@@ -163,7 +163,7 @@ func TestSkipHead(t *testing.T) {
 	input := "{{- .input | skipHead 2 -}}"
 	expected := `Line 3`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `Line 1
 Line 2
@@ -182,7 +182,7 @@ func TestTail(t *testing.T) {
 	expected := `Line 2
 Line 3`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `Line 1
 Line 2
@@ -200,7 +200,7 @@ func TestSkipTail(t *testing.T) {
 	input := "{{- .input | skipTail 2 -}}"
 	expected := `Line 1`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `Line 1
 Line 2
@@ -220,7 +220,7 @@ func TestRegexpReplaceLine(t *testing.T) {
 2
 text`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `text 13
 text 2
@@ -240,7 +240,7 @@ func TestWrapLines(t *testing.T) {
 (Line 2)
 (Line 3)`
 
-	funcMap := MakeFuncMap(LineHelpers())
+	funcMap := MakeFuncMap(LinesHelpers())
 	data := map[string]string{
 		"input": `Line 1
 Line 2

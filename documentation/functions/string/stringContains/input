@@ -1,0 +1,11 @@
+{{ if stringContains "ABC" "ABCDEFGHIJKLMNOPQRSTUVXYZ" -}}
+    first example contained
+{{- else -}}
+    first example not contained
+{{- end }}
+
+{{ if stringContains "BFO" "ABCDEFGHIJKLMNOPQRSTUVXYZ" -}}
+    second example contained
+{{- else -}}
+    second example not contained
+{{- end }}

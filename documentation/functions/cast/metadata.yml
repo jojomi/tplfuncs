@@ -1,0 +1,3 @@
+title: Casting
+description: Functions related to casting between datatypes. Uses the https://github.com/spf13/cast library.
+source: cast.go

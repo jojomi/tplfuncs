@@ -28,16 +28,19 @@ func assertTypeFunc[T any](msg string, input interface{}) error {
 	return nil
 }
 
+// Doc: `assertString` makes sure the given variable is of type string.
 func assertStringFunc(input interface{}) error {
 	msg := fmt.Sprintf("not a string: %+v (type %T)", input, input)
 	return assertTypeFunc[string](msg, input)
 }
 
+// Doc: `assertInt` makes sure the given variable is of type int.
 func assertIntFunc(input interface{}) error {
 	msg := fmt.Sprintf("not an int: %+v (type %T)", input, input)
 	return assertTypeFunc[string](msg, input)
 }
 
+// Doc: `assertFloat` makes sure the given variable is of type float64.
 func assertFloatFunc(input interface{}) error {
 	msg := fmt.Sprintf("not a float: %+v (type %T)", input, input)
 	return assertTypeFunc[string](msg, input)

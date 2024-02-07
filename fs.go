@@ -42,18 +42,22 @@ func FilesystemHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(FilesystemHelpers())
 }
 
+// Doc: `glob` returns a list of files and/or directories matching the patter given.
 func globFunc(pattern string) ([]string, error) {
 	return afero.Glob(Fs, pattern)
 }
 
+// Doc: `fileAt` returns a gofs.File at the given path.
 func fileAtFunc(filePath string) gofs.File {
 	return gofs.FileWithFs(filePath, Fs)
 }
 
+// Doc: `dirAt` returns a gofs.Dir at the given path.
 func dirAtFunc(dirPath string) gofs.Dir {
 	return gofs.DirWithFs(dirPath, Fs)
 }
 
+// Doc: `basename` returns the basename component of a path.
 func basenameFunc(filename string) string {
 	return filepath.Base(filename)
 }

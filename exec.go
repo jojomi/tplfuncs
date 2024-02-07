@@ -94,6 +94,7 @@ func execTempFunc(command string) (string, error) {
 	return execWdFunc(command, os.TempDir())
 }
 
+// Doc: `run` executes a command locally.
 func runFunc(command string) (string, error) {
 	r := getRunner().WithCommand(gorun.LocalCommandFrom(command))
 
@@ -111,13 +112,14 @@ func runFunc(command string) (string, error) {
 func getRunner() *gorun.Runner {
 	r := gorun.New().WithoutStdout().WithoutStderr()
 
-	if os.Getenv("IO_LOG_RUN_FUNC") == "true" {
+	if os.Getenv("TPLFUNCS_LOG_RUN_FUNC") == "true" {
 		r = r.LogCommand(true)
 	}
 
 	return r
 }
 
+// Doc: `runSSH` executes a command via SSH.
 func runSSHFunc(sshAlias, command string) (string, error) {
 	c := gorun.NewSSHCommandFrom(sshAlias, gorun.LocalCommandFrom(command))
 	r := getRunner().WithCommand(c)
@@ -129,10 +131,12 @@ func runSSHFunc(sshAlias, command string) (string, error) {
 	return rr.CombinedOutput(), nil
 }
 
+// Doc: `runner` returns a pre-configured *gorun.Runner.
 func runnerFunc() *gorun.Runner {
 	return getRunner()
 }
 
+// Doc: `localCommandFrom` makes a *gorun.LocalCommand from a string.
 func localCommandFromFunc(command string) *gorun.LocalCommand {
 	return gorun.LocalCommandFrom(command)
 }

@@ -1,0 +1,3 @@
+title: Random
+description: Functions related to generating random numbers.
+source: random.go

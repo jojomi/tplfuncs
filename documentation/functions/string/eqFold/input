@@ -1,0 +1,11 @@
+{{ if eqFold "ABC" "abc" -}}
+    the first strings are equal
+{{- else -}}
+    the first strings are not equal
+{{- end }}
+
+{{ if eqFold "abcd" "abcf" -}}
+    the second strings are equal
+{{- else -}}
+    the second strings are not equal
+{{- end }}

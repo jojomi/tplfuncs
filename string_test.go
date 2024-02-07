@@ -25,7 +25,7 @@ func Test_stringCamelCaseFunc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, stringCamelCaseFunc(tt.args.input), "stringCamelCaseFunc(%v)", tt.args.input)
+			assert.Equalf(t, tt.want, toCamelCaseFunc(tt.args.input), "toCamelCaseFunc(%v)", tt.args.input)
 		})
 	}
 }
@@ -83,7 +83,7 @@ func Test_stringKebabFunc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, stringKebabFunc(tt.args.input), "stringKebabFunc(%v)", tt.args.input)
+			assert.Equalf(t, tt.want, toKebabCaseFunc(tt.args.input), "toKebabFunc(%v)", tt.args.input)
 		})
 	}
 }
@@ -107,7 +107,7 @@ func Test_stringLowerCamelCaseFunc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, stringLowerCamelCaseFunc(tt.args.input), "stringLowerCamelCaseFunc(%v)", tt.args.input)
+			assert.Equalf(t, tt.want, toLowerCamelCaseFunc(tt.args.input), "toLowerCamelCaseFunc(%v)", tt.args.input)
 		})
 	}
 }
@@ -131,7 +131,7 @@ func Test_stringSnakeFunc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, stringSnakeFunc(tt.args.input), "stringSnakeFunc(%v)", tt.args.input)
+			assert.Equalf(t, tt.want, toSnakeCaseFunc(tt.args.input), "toSnakeFunc(%v)", tt.args.input)
 		})
 	}
 }
@@ -203,7 +203,7 @@ func Test_stringCleanFunc(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equalf(t, tt.want, stringCleanFunc(tt.args.input), "stringCleanFunc(%v)", tt.args.input)
+			assert.Equalf(t, tt.want, stringCleanFunc('_', tt.args.input), "stringCleanFunc(%v)", tt.args.input)
 		})
 	}
 }

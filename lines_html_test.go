@@ -16,7 +16,7 @@ Line 3`
 	template := `<div>{{ .in | match "Line 2" -}}</div>`
 	expected := `<div>Line 2</div>`
 
-	funcMap := MakeHTMLFuncMap(LineHelpersHTML())
+	funcMap := MakeHTMLFuncMap(LinesHelpersHTML())
 	data := map[string]string{
 		"in": input,
 	}

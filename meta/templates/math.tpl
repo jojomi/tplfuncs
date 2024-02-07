@@ -21,15 +21,9 @@ func MathHelpers() textTemplate.FuncMap {
             "subtract{{ $ccName }}": subtract{{ $ccName }}Func,
             "subtractFrom{{ $ccName }}": subtractFrom{{ $ccName }}Func,
             "multiply{{ $ccName }}": multiply{{ $ccName }}Func,
+            "divide{{ $ccName }}By": divide{{ $ccName }}ByFunc,
             {{- newline -}}
 		{{- end }}
-
-        // deprecated
-        "floatAdd":   floatAddFunc,
-        "floatSub":   floatSubFunc,
-        "floatMul":   floatMulFunc,
-        "floatDiv":   floatDivFunc,
-        "floatDivBy": floatDivByFunc,
 	}
 }
 
@@ -38,71 +32,6 @@ func MathHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(MathHelpers())
 }
 
-func floatDivFunc(values ...float64) (float64, error) {
-	if len(values) < 2 {
-		return 0, fmt.Errorf("not enough values given for floating point division: %v", values)
-	}
-	result := values[0]
-	for _, v := range values[1:] {
-		if v == 0 {
-			return 0, fmt.Errorf("floating point division by null with values %v", values)
-		}
-		result = result / v
-	}
-	return result, nil
-}
-
-func floatDivByFunc(values ...float64) (float64, error) {
-	count := len(values)
-	reversedValues := make([]float64, count)
-
-	for i, v := range values {
-		reversedValues[count-(i+1)] = v
-	}
-
-	return floatDivFunc(reversedValues...)
-}
-
-func floatAddFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum += v
-	}
-
-	return sum
-}
-
-func floatSubFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum -= v
-	}
-
-	return sum
-}
-
-func floatMulFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum *= v
-	}
-
-	return sum
-}
-
-
 {{ range $.mathTypes -}}
     {{ $ccName := toCamelCase .name -}}
     {{ $value := .value }}
@@ -110,7 +39,7 @@ func floatMulFunc(values ...float64) float64 {
         {{ $value = .name -}}
     {{ end -}}
 
-    // add{{ $ccName }}Func adds a number of {{ $value }} values and returns the total sum.
+    // Doc: `add{{ $ccName }}` adds a number of {{ $value }} values and returns the total sum.
     func add{{ $ccName }}Func(inputs ...{{ $value }}) {{ $value }} {
         var sum {{ $value }}
         for _, input := range inputs {
@@ -119,7 +48,7 @@ func floatMulFunc(values ...float64) float64 {
         return sum
     }
 
-    // subtract{{ $ccName }}Func subtracts a number of {{ $value }} values from the first one and returns the remaining value.
+    // Doc: `subtract{{ $ccName }}` subtracts a number of {{ $value }} values from the first one and returns the remaining value.
     func subtract{{ $ccName }}Func(start {{ $value }}, inputs ...{{ $value }}) {{ $value }} {
         sum := start
         for _, input := range inputs {
@@ -128,7 +57,7 @@ func floatMulFunc(values ...float64) float64 {
         return sum
     }
 
-    // subtractFrom{{ $ccName }}Func subtracts a number of {{ $value }} values from the last one and returns the remaining value.
+    // Doc: `subtractFrom{{ $ccName }}` subtracts a number of {{ $value }} values from the last one and returns the remaining value.
     func subtractFrom{{ $ccName }}Func(inputs ...{{ $value }}) {{ $value }} {
         if len(inputs) == 0 {
             return 0
@@ -140,12 +69,17 @@ func floatMulFunc(values ...float64) float64 {
         return sum
     }
 
-    // multiply{{ $ccName }}Func multiplies a number of {{ $value }} values and returns the total value.
+    // Doc: `multiply{{ $ccName }}` multiplies a number of {{ $value }} values and returns the total value.
     func multiply{{ $ccName }}Func(inputs ...{{ $value }}) {{ $value }} {
-        var sum {{ $value }}
+        var sum {{ $value }} = 1
         for _, input := range inputs {
             sum *= input
         }
         return sum
+    }
+
+    // Doc: `divide{{ $ccName }}By` divides a {{ $value }} value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
+    func divide{{ $ccName }}ByFunc(divisor, value {{ $value }}) {{ $value }} {
+        return value / divisor
     }
 {{ end -}}

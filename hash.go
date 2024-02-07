@@ -21,6 +21,7 @@ func HashHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(HashHelpers())
 }
 
+// Doc: `sha1` returns the SHA1 hash of the string given.
 func sha1Func(input string) string {
 	h := sha1.New()
 	h.Write([]byte(input))
@@ -29,6 +30,7 @@ func sha1Func(input string) string {
 	return hex.EncodeToString(sha)
 }
 
+// Doc: `sha256` returns the SHA256 hash of the string given.
 func sha256Func(input string) string {
 	h := sha256.New()
 	h.Write([]byte(input))

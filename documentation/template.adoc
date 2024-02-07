@@ -1,0 +1,43 @@
+= tplfuncs
+:toc: preamble
+:toclevels: 3
+
+{{ $config := readFile "data.yml" | parseYAML -}}
+{{ $dirs := $config.categories -}}
+
+{{ $totalFunctionCount := 0 -}}
+{{ range $dirs -}}
+    {{ $dir := . -}}
+    {{/* read metadata */}}
+    {{- $ymlPath := printf "functions/%s/metadata.yml" $dir -}}
+    {{ if not (fileExists $ymlPath) -}}
+        {{ continue -}}
+    {{ end -}}
+    {{ $metadata := readFile $ymlPath | parseYAML -}}
+    {{/* get doc functions */}}
+    {{- $command := printf "sh -c '\"${SOURCE_CHECKER_PATH}\" list_funcs ../%s'" $metadata.source -}}
+    {{ $funcs := run $command | parseJSON -}}
+
+    {{ $totalFunctionCount = addInt $totalFunctionCount (len $funcs) -}}
+{{ end -}}
+
+`tplfuncs` is a collection of **{{ $totalFunctionCount }} useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
+
+link:https://goreportcard.com/report/github.com/jojomi/tplfuncs[image:https://goreportcard.com/badge/github.com/jojomi/tplfuncs]
+
+link:https://pkg.go.dev/github.com/jojomi/tplfuncs[Documentation]
+
+== Who uses it?
+
+* link:https://github.com/jojomi/io[jojomi/io] -- A tool that easily generates documents from a template and data with the powerful functions defined here
+* This very documentation is built on the functions provided by `tplfuncs`. After all you _should_ dogfood as a programmer!
+
+== List of Functions
+
+There is a total number of **{{ $totalFunctionCount | pluralWithNum "function" "functions" }}** contained in this package.
+
+{{ range $dirs -}}
+    {{ $dir := . -}}
+    {{ inlineWithData "group.adoc" "dir" $dir | trim -}}
+    {{ newline 2 -}}
+{{ end -}}
