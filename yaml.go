@@ -1,9 +1,10 @@
 package tplfuncs
 
 import (
-	"gopkg.in/yaml.v3"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
+
+	"gopkg.in/yaml.v3"
 )
 
 // YAMLHelpers returns a text template FuncMap with yaml related functions
