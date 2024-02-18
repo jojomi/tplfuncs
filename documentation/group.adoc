@@ -1,0 +1,81 @@
+{{/*- read metadata -*/}}
+{{ $ymlPath := printf "functions/%s/metadata.yml" $.dir -}}
+{{ if fileExists $ymlPath -}}
+{{ $metadata := readFile $ymlPath | parseYAML -}}
+=== {{ $metadata.title }}
+
+{{ with $metadata.description -}}
+    {{ . -}}
+{{ end -}}
+
+{{/* get doc functions */}}
+{{- $command := printf "sh -c '\"${SOURCE_CHECKER_PATH}\" list_funcs ../%s'" $metadata.source -}}
+{{ $funcs := run $command | parseJSON -}}
+
+{{ $funcsShort := makeStringList -}}
+{{ range $funcs -}}
+    {{ $drop := $funcsShort.Add .TemplateName -}}
+{{ end -}}
+{{ newline 2 -}}
+_(a total of **{{ len $funcs | pluralWithNum "function" "functions" }}**: {{ $funcsShort.All | joinLines | wrapLines "<<" ">>" | getLines | joinText ", " " and " ", and " -}} )_
+
+{{/* loop functions */}}
+{{- range $funcs -}}
+    {{ $func := .TemplateName -}}
+    {{ $sourceFunc := .FunctionName -}}
+==== {{ $func }}
+
+    {{- newline 2 -}}
+
+    {{ with .Doc -}}
+        {{ . -}}
+    {{ end -}}
+
+    {{- newline 2 -}}
+    **Signature**: `{{ $func -}} (
+        {{- range $i, $param := .Params -}}
+            {{ if ne $i 0 }}, {{ end -}}
+            {{ $param.Name }} {{ $param.Type -}}
+        {{ end -}}
+    )
+    {{- space 1 -}}
+    {{ if gt (len .Results) 1 -}} ( {{- end }}
+        {{- range $i, $result := .Results -}}
+            {{ if ne $i 0 }}, {{ end -}}
+            {{ $result.Name }} {{- if $result.Name }} {{ end -}} {{ $result.Type -}}
+        {{ end -}}
+    {{ if gt (len .Results) 1 -}} ) {{- end -}}
+    `
+
+    {{- noop -}}
+    {{/* example input avaFilable? */}}
+    {{- $inputPath := printf "functions/%s/%s/input" $.dir $func -}}
+
+    {{ if fileExists $inputPath -}}
+    {{- newline 2 -}}
+===== Example for {{ $func }}
+
+[source,golang,lineno]
+._link:documentation/{{ $inputPath }}[]_
+....
+{{ include $inputPath }}
+....
+
+        {{- noop -}}
+        {{/* example output available? */}}
+        {{- $outputPath := printf "functions/%s/%s/output" $.dir $func -}}
+
+        {{- if fileExists $outputPath }}
+{{- newline 2 -}}
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/{{ $outputPath }}[]_
+....
+{{ include $outputPath }}
+....
+        {{- end -}}
+    {{ end -}}
+    {{- newline 2 -}}
+{{ end -}}
+{{ end -}}

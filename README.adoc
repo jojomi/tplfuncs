@@ -1,0 +1,1077 @@
+= tplfuncs
+:toc: preamble
+:toclevels: 3
+
+`tplfuncs` is a collection of **114 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
+
+link:https://goreportcard.com/report/github.com/jojomi/tplfuncs[image:https://goreportcard.com/badge/github.com/jojomi/tplfuncs]
+
+link:https://pkg.go.dev/github.com/jojomi/tplfuncs[Documentation]
+
+== Who uses it?
+
+* link:https://github.com/jojomi/io[jojomi/io] -- A tool that easily generates documents from a template and data with the powerful functions defined here
+* This very documentation is built on the functions provided by `tplfuncs`. After all you _should_ dogfood as a programmer!
+
+== List of Functions
+
+There is a total number of **114 functions** contained in this package.
+
+=== Spacing
+
+Functions related to spacing (spaces, newlines). These functions help controlling the space generated in the target string more precisely than the built-in removal options within the template strings ({{- like this -}}).
+
+_(a total of **5 functions**: <<space>>, <<tab>>, <<newline>>, <<noop>>, and <<blackhole>>)_
+
+==== space
+
+`space` inserts a number of space characters, default is one. Often this function is used in a block that removes whitespace around it.
+
+**Signature**: `space(count ...int) string`
+
+===== Example for space
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/space/input[]_
+....
+first
+{{- space -}}
+second and
+{{- space 3 }} third word
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/space/output[]_
+....
+first second and    third word
+....
+
+==== tab
+
+`tab` inserts a number of tab characters, default is one. Often this function is used in a block that removes whitespace around it.
+
+**Signature**: `tab(count ...int) string`
+
+==== newline
+
+`newline` inserts a number of newline characters, default is one. Often this function is used in a block that removes whitespace around it.
+
+**Signature**: `newline(count ...int) string`
+
+===== Example for newline
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/newline/input[]_
+....
+first
+{{- newline -}}
+second and
+{{- newline 3 }} third word
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/newline/output[]_
+....
+first
+second and
+
+
+ third word
+....
+
+==== noop
+
+`noop` does nothing. This can be useful to control spacing between elements because {{- -}} is not valid in itself.
+
+**Signature**: `noop() string`
+
+===== Example for noop
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/noop/input[]_
+....
+gr
+  {{- noop -}}
+
+apefruit
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/spacing/noop/output[]_
+....
+grapefruit
+....
+
+==== blackhole
+
+`blackhole` does take any input and discards it.
+
+**Signature**: `blackhole(inputs ...interface{}) string`
+
+=== Default
+
+Functions related to default values.
+
+_(a total of **11 functions**: <<firstNonNilBool>>, <<defaultBool>>, <<firstNonNilInt>>, <<firstSetInt>>, <<defaultInt>>, <<firstNonNilString>>, <<firstSetString>>, <<defaultString>>, <<firstNonNilFloat>>, <<firstSetFloat>>, and <<defaultFloat>>)_
+
+==== firstNonNilBool
+
+`firstNonNilBool` returns the first element in the given list of bool values that is not nil.
+
+**Signature**: `firstNonNilBool(inputs ...any) (bool, error)`
+
+==== defaultBool
+
+`defaultBool` is an alias for `firstNonNilBool`.
+
+**Signature**: `defaultBool(inputs ...any) (bool, error)`
+
+==== firstNonNilInt
+
+`firstNonNilInt` returns the first element in the given list of int values that is not nil.
+
+**Signature**: `firstNonNilInt(inputs ...any) (int, error)`
+
+==== firstSetInt
+
+`firstSetInt` returns the first element in the given list of int values that is not the empty value forInt.
+
+**Signature**: `firstSetInt(inputs ...any) (*int, error)`
+
+==== defaultInt
+
+`defaultInt` is an alias for `firstSetInt`.
+
+**Signature**: `defaultInt(inputs ...any) (*int, error)`
+
+==== firstNonNilString
+
+`firstNonNilString` returns the first element in the given list of string values that is not nil.
+
+**Signature**: `firstNonNilString(inputs ...any) (string, error)`
+
+==== firstSetString
+
+`firstSetString` returns the first element in the given list of string values that is not the empty value forString.
+
+**Signature**: `firstSetString(inputs ...any) (*string, error)`
+
+==== defaultString
+
+`defaultString` is an alias for `firstSetString`.
+
+**Signature**: `defaultString(inputs ...any) (*string, error)`
+
+==== firstNonNilFloat
+
+`firstNonNilFloat` returns the first element in the given list of float values that is not nil.
+
+**Signature**: `firstNonNilFloat(inputs ...any) (float64, error)`
+
+==== firstSetFloat
+
+`firstSetFloat` returns the first element in the given list of float values that is not the empty value forFloat.
+
+**Signature**: `firstSetFloat(inputs ...any) (*float64, error)`
+
+==== defaultFloat
+
+`defaultFloat` is an alias for `firstSetFloat`.
+
+**Signature**: `defaultFloat(inputs ...any) (*float64, error)`
+
+=== String
+
+Functions related to strings.
+
+_(a total of **20 functions**: <<trim>>, <<eqFold>>, <<eqIgnoreCase>>, <<stringContains>>, <<stringHasPrefix>>, <<stringHasSuffix>>, <<toUpperCase>>, <<toLowerCase>>, <<toCamelCase>>, <<toLowerCamelCase>>, <<toSnakeCase>>, <<toKebabCase>>, <<trimPrefix>>, <<trimSuffix>>, <<stringToFilename>>, <<stringToURL>>, <<diff>>, <<deHTML>>, <<replace>>, and <<regexpReplace>>)_
+
+==== trim
+
+`trim` removes all leading and trailing whitespace from the given string. Returns the string unchanged if neither exists.
+
+**Signature**: `trim(input string) string`
+
+===== Example for trim
+
+[source,golang,lineno]
+._link:documentation/functions/string/trim/input[]_
+....
+a{{ trim " bc " -}}
+de
+{{- " fg" | trim }}hi
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/trim/output[]_
+....
+abcdefghi
+....
+
+==== eqFold
+
+`eqFold` compares two strings disregarding their casing.
+
+**Signature**: `eqFold(a string, b string) bool`
+
+===== Example for eqFold
+
+[source,golang,lineno]
+._link:documentation/functions/string/eqFold/input[]_
+....
+{{ if eqFold "ABC" "abc" -}}
+    the first strings are equal
+{{- else -}}
+    the first strings are not equal
+{{- end }}
+
+{{ if eqFold "abcd" "abcf" -}}
+    the second strings are equal
+{{- else -}}
+    the second strings are not equal
+{{- end }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/eqFold/output[]_
+....
+the first strings are equal
+
+the second strings are not equal
+....
+
+==== eqIgnoreCase
+
+`eqIgnoreCase` is an alias for `eqFold`.
+
+**Signature**: `eqIgnoreCase(a string, b string) bool`
+
+==== stringContains
+
+`stringContains` checks if one string is contained in another.
+
+**Signature**: `stringContains(needle string, haystack string) bool`
+
+===== Example for stringContains
+
+[source,golang,lineno]
+._link:documentation/functions/string/stringContains/input[]_
+....
+{{ if stringContains "ABC" "ABCDEFGHIJKLMNOPQRSTUVXYZ" -}}
+    first example contained
+{{- else -}}
+    first example not contained
+{{- end }}
+
+{{ if stringContains "BFO" "ABCDEFGHIJKLMNOPQRSTUVXYZ" -}}
+    second example contained
+{{- else -}}
+    second example not contained
+{{- end }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/stringContains/output[]_
+....
+first example contained
+
+second example not contained
+....
+
+==== stringHasPrefix
+
+`stringHasPrefix` determines if a string starts with a given other string.
+
+**Signature**: `stringHasPrefix(prefix string, testString string) bool`
+
+==== stringHasSuffix
+
+`stringHasSuffix` determines if a string ends with a given other string.
+
+**Signature**: `stringHasSuffix(suffix string, testString string) bool`
+
+==== toUpperCase
+
+`toUpperCase` returns the given string converted to all uppercase letters.
+
+**Signature**: `toUpperCase(input string) string`
+
+===== Example for toUpperCase
+
+[source,golang,lineno]
+._link:documentation/functions/string/toUpperCase/input[]_
+....
+{{ toUpperCase "abc" }} {{ "DEF" | toUpperCase }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/toUpperCase/output[]_
+....
+ABC DEF
+....
+
+==== toLowerCase
+
+`toLowerCase` returns the given string converted to all lowercase letters.
+
+**Signature**: `toLowerCase(input string) string`
+
+===== Example for toLowerCase
+
+[source,golang,lineno]
+._link:documentation/functions/string/toLowerCase/input[]_
+....
+{{ toLowerCase "abc" }} {{ "DEF" | toLowerCase }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/toLowerCase/output[]_
+....
+abc def
+....
+
+==== toCamelCase
+
+`toCamelCase` returns the given string converted to camel case (https://en.wikipedia.org/wiki/Camel_case), first letter uppercase.
+
+**Signature**: `toCamelCase(input string) string`
+
+==== toLowerCamelCase
+
+`toLowerCamelCase` returns the given string converted to lower camel case (https://en.wikipedia.org/wiki/Camel_case), first letter lowercase.
+
+**Signature**: `toLowerCamelCase(input string) string`
+
+==== toSnakeCase
+
+`toSnakeCase` returns the given string converted to snake case (https://en.wikipedia.org/wiki/Snake_case).
+
+**Signature**: `toSnakeCase(input string) string`
+
+==== toKebabCase
+
+`toKebabCase` returns the given string converted to kebab case (https://en.wikipedia.org/wiki/Kebab_case).
+
+**Signature**: `toKebabCase(input string) string`
+
+==== trimPrefix
+
+`trimPrefix` returns the given string without the given prefix if there is one, otherwise the string is returned unchanged.
+
+**Signature**: `trimPrefix(prefix string, input string) string`
+
+===== Example for trimPrefix
+
+[source,golang,lineno]
+._link:documentation/functions/string/trimPrefix/input[]_
+....
+{{ "www.my-domain.com" | trimPrefix "www." -}}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/trimPrefix/output[]_
+....
+my-domain.com
+....
+
+==== trimSuffix
+
+`trimSuffix` returns the given string without the given suffix if there is one, otherwise the string is returned unchanged.
+
+**Signature**: `trimSuffix(suffix string, input string) string`
+
+===== Example for trimSuffix
+
+[source,golang,lineno]
+._link:documentation/functions/string/trimSuffix/input[]_
+....
+{{ "my-domain.com" | trimSuffix ".com" -}}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/string/trimSuffix/output[]_
+....
+my-domain
+....
+
+==== stringToFilename
+
+'stringToFilename' returns the given string suitable for a filename.
+
+**Signature**: `stringToFilename(input string) string`
+
+==== stringToURL
+
+'stringToURL' returns the given string suitable for a URL.
+
+**Signature**: `stringToURL(input string) string`
+
+==== diff
+
+`diffFunc` returns the diff between two strings with their associated names.
+
+**Signature**: `diff(nameA string, contentA string, nameB string, contentB string, numContextLines int) string`
+
+==== deHTML
+
+`deHTML` returns the raw string contained in a template.HTML.
+
+**Signature**: `deHTML(input htmlTemplate.HTML) string`
+
+==== replace
+
+`replace` returns a given string with all occurrences of the given substring replaced by the replacement string.
+
+**Signature**: `replace(search string, replacement string, input string) string`
+
+==== regexpReplace
+
+`regexpReplace` returns a given string with all occurrences of the given regexp replaced by the replacement string.
+
+**Signature**: `regexpReplace(regexpValue string, replacement string, input string) string`
+
+=== Lines
+
+Functions related to multiline strings.
+
+_(a total of **20 functions**: <<lineOrErr>>, <<line>>, <<sortLines>>, <<head>>, <<skipHead>>, <<tail>>, <<skipTail>>, <<trimLines>>, <<trimAll>>, <<notMatch>>, <<match>>, <<withoutEmptyLines>>, <<withoutLineComments>>, <<wrapLines>>, <<indentSpaceLines>>, <<prefixLines>>, <<indentTabLines>>, <<getLines>>, <<asString>>, and <<regexpReplaceLine>>)_
+
+==== lineOrErr
+
+`lineOrErr` returns a single line from the multiline input. The index is 1-based. Returns an error, if the line does not exist.
+
+**Signature**: `lineOrErr(number int, input string) (string, error)`
+
+==== line
+
+`line` returns a single line from the multiline input. The index is 1-based. Returns an empty string, if the line does not exist.
+
+**Signature**: `line(number int, input string) string`
+
+===== Example for line
+
+[source,golang,lineno]
+._link:documentation/functions/lines/line/input[]_
+....
+An excerpt from Shakespeare's "Spring And Winter":
+
+{{ .poem | line 4 }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/lines/line/output[]_
+....
+An excerpt from Shakespeare's "Spring And Winter":
+
+Do paint the meadows with delight,
+....
+
+==== sortLines
+
+Return the multiline input sorted alphabetically line by line.
+
+**Signature**: `sortLines(input string) string`
+
+==== head
+
+`head` returns the first n lines of a multiline string as one string, or all of it if there is less than n lines in total.
+
+**Signature**: `head(count int, input string) string`
+
+==== skipHead
+
+`skipHead` returns the multiline string given without the first n lines or an empty string if there is less than n lines in total.
+
+**Signature**: `skipHead(count int, input string) string`
+
+==== tail
+
+`tail` returns the last n lines of a multiline string as one string, or all of it if there is less than n lines in total.
+
+**Signature**: `tail(count int, input string) string`
+
+==== skipTail
+
+`skipTail` returns the multiline string given without the last n lines or an empty string if there is less than n lines in total.
+
+**Signature**: `skipTail(count int, input string) string`
+
+==== trimLines
+
+`trimLines` returns the multiline string given without leading and trailing empty lines.
+
+**Signature**: `trimLines(input string) string`
+
+==== trimAll
+
+`trimAll` returns the multiline string given with leading and trailing space removed for any line individually.
+
+**Signature**: `trimAll(input string) string`
+
+==== notMatch
+
+`notMatch` does return a string with all lines from the given multiline string that do not match the regexp given.
+
+**Signature**: `notMatch(regExp string, input string) string`
+
+==== match
+
+`match` does return a string with all lines from the given multiline string that do match the regexp given.
+
+**Signature**: `match(regExp string, input string) string`
+
+==== withoutEmptyLines
+
+`withoutEmptyLines` returns the multiline string given without empty lines.
+
+**Signature**: `withoutEmptyLines(input string) string`
+
+==== withoutLineComments
+
+`withoutLineComments` returns the multiline string given without line comments (lines starting with optional whitespace and // or #).
+
+**Signature**: `withoutLineComments(input string) string`
+
+==== wrapLines
+
+`wrapLines` returns the multiline string with every single line wrapped with the given leading and trailing string.
+
+**Signature**: `wrapLines(leading string, trailing string, input string) string`
+
+==== indentSpaceLines
+
+`indentSpaceLines` returns the multiline string given with every line indented by additional n spaces.
+
+**Signature**: `indentSpaceLines(spaceCount int, input string) string`
+
+==== prefixLines
+
+`prefixLines` returns the multiline string given with every line prefixed with the string given.
+
+**Signature**: `prefixLines(prefix string, input string) string`
+
+==== indentTabLines
+
+`indentTabLines` returns the multiline string given with every line indented by additional n tab characters.
+
+**Signature**: `indentTabLines(tabCount int, input string) string`
+
+==== getLines
+
+`getLines` returns the individual lines of a multiline string.
+
+**Signature**: `getLines(input string) []string`
+
+==== asString
+
+`asString` returns a string separated by newline characters from a string slice.
+
+**Signature**: `asString(lines []string) string`
+
+==== regexpReplaceLine
+
+`regexpReplaceLine` returns a string from a multiline string where the regexp given is executed on every single line and the replacement executed if there was one or more matches.
+
+**Signature**: `regexpReplaceLine(regExp string, replacement string, input string) string`
+
+=== Math
+
+Mathematical functions.
+
+_(a total of **10 functions**: <<addInt>>, <<subtractInt>>, <<subtractFromInt>>, <<multiplyInt>>, <<divideIntBy>>, <<addFloat>>, <<subtractFloat>>, <<subtractFromFloat>>, <<multiplyFloat>>, and <<divideFloatBy>>)_
+
+==== addInt
+
+`addInt` adds a number of int values and returns the total sum.
+
+**Signature**: `addInt(inputs ...int) int`
+
+==== subtractInt
+
+`subtractInt` subtracts a number of int values from the first one and returns the remaining value.
+
+**Signature**: `subtractInt(start int, inputs ...int) int`
+
+==== subtractFromInt
+
+`subtractFromInt` subtracts a number of int values from the last one and returns the remaining value.
+
+**Signature**: `subtractFromInt(inputs ...int) int`
+
+==== multiplyInt
+
+`multiplyInt` multiplies a number of int values and returns the total value.
+
+**Signature**: `multiplyInt(inputs ...int) int`
+
+==== divideIntBy
+
+`divideIntBy` divides a int value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
+
+**Signature**: `divideIntBy(divisor int, value int) int`
+
+==== addFloat
+
+`addFloat` adds a number of float64 values and returns the total sum.
+
+**Signature**: `addFloat(inputs ...float64) float64`
+
+==== subtractFloat
+
+`subtractFloat` subtracts a number of float64 values from the first one and returns the remaining value.
+
+**Signature**: `subtractFloat(start float64, inputs ...float64) float64`
+
+==== subtractFromFloat
+
+`subtractFromFloat` subtracts a number of float64 values from the last one and returns the remaining value.
+
+**Signature**: `subtractFromFloat(inputs ...float64) float64`
+
+==== multiplyFloat
+
+`multiplyFloat` multiplies a number of float64 values and returns the total value.
+
+**Signature**: `multiplyFloat(inputs ...float64) float64`
+
+==== divideFloatBy
+
+`divideFloatBy` divides a float64 value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
+
+**Signature**: `divideFloatBy(divisor float64, value float64) float64`
+
+=== Exec
+
+Execute system commands. This is relying on https://github.com/jojomi/gorun.
+
+_(a total of **4 functions**: <<run>>, <<runSSH>>, <<runner>>, and <<localCommandFrom>>)_
+
+==== run
+
+`run` executes a command locally.
+
+**Signature**: `run(command string) (string, error)`
+
+==== runSSH
+
+`runSSH` executes a command via SSH.
+
+**Signature**: `runSSH(sshAlias string, command string) (string, error)`
+
+==== runner
+
+`runner` returns a pre-configured *gorun.Runner.
+
+**Signature**: `runner() *gorun.Runner`
+
+==== localCommandFrom
+
+`localCommandFrom` makes a *gorun.LocalCommand from a string.
+
+**Signature**: `localCommandFrom(command string) *gorun.LocalCommand`
+
+=== IO
+
+Functions related to I/O operations.
+
+_(a total of **4 functions**: <<include>>, <<readFile>>, <<writeFile>>, and <<writeFileWithPerms>>)_
+
+==== include
+
+`include` is an alias for `readFile`.
+
+**Signature**: `include(filename string) (string, error)`
+
+==== readFile
+
+`readFile` does return the content of a file as a string.
+
+**Signature**: `readFile(filename string) (string, error)`
+
+==== writeFile
+
+`writeFile` writes as string to a file.
+
+**Signature**: `writeFile(filename string, content string) error`
+
+==== writeFileWithPerms
+
+`writeFileWithPerms` writes as string to a file with given (unix) permissions.
+
+**Signature**: `writeFileWithPerms(filename string, permissions os.FileMode, content string) error`
+
+=== Filesystem
+
+Functions related to filesystem operations.
+
+_(a total of **4 functions**: <<glob>>, <<fileAt>>, <<dirAt>>, and <<basename>>)_
+
+==== glob
+
+`glob` returns a list of files and/or directories matching the patter given.
+
+**Signature**: `glob(pattern string) ([]string, error)`
+
+==== fileAt
+
+`fileAt` returns a gofs.File at the given path.
+
+**Signature**: `fileAt(filePath string) gofs.File`
+
+==== dirAt
+
+`dirAt` returns a gofs.Dir at the given path.
+
+**Signature**: `dirAt(dirPath string) gofs.Dir`
+
+==== basename
+
+`basename` returns the basename component of a path.
+
+**Signature**: `basename(filename string) string`
+
+=== Env
+
+Functions related to interacting with the system ENV.
+
+_(a total of **3 functions**: <<env>>, <<envIsSet>>, and <<envEq>>)_
+
+==== env
+
+`env` returns the value of an ENV variable by name.
+
+**Signature**: `env(key string) string`
+
+==== envIsSet
+
+`envIsSet` checks if an ENV variable is set by its name.
+
+**Signature**: `envIsSet(key string) bool`
+
+==== envEq
+
+`envEq` checks if an ENV variable of a given name has the given value.
+
+**Signature**: `envEq(key string, value string) bool`
+
+=== Network
+
+Functions related to network operations.
+
+_(a total of **1 function**: <<download>>)_
+
+==== download
+
+`download` executes an HTTP GET request to a given URL and stores the result to a file.
+
+**Signature**: `download(srcURL string, filename string) error`
+
+=== Random
+
+Functions related to generating random numbers.
+
+_(a total of **2 functions**: <<seededRandom>> and <<random>>)_
+
+==== seededRandom
+
+`seededRandom` returns a rand.Source that is seeded with the given int value.
+
+**Signature**: `seededRandom(seed int) *rand.Rand`
+
+==== random
+
+`random` returns a rand.Source that is seeded with the current time.
+
+**Signature**: `random() *rand.Rand`
+
+=== Semantic Versioning
+
+Functions related to semantic versioning.
+
+_(a total of **3 functions**: <<parseSemver>>, <<semverToMajor>>, and <<semverToMinor>>)_
+
+==== parseSemver
+
+`parseSemver` converts a string to a *semver.Version.
+
+**Signature**: `parseSemver(semverString string) (*semver.Version, error)`
+
+==== semverToMajor
+
+`semverToMajor` converts a string to the major version part of a *semver.Version.
+
+**Signature**: `semverToMajor(semverString string) (string, error)`
+
+==== semverToMinor
+
+`semverToMinor` converts a string to the major.minor version part of a *semver.Version.
+
+**Signature**: `semverToMinor(semverString string) (string, error)`
+
+=== Date
+
+Functions related to date and time.
+
+_(a total of **2 functions**: <<now>> and <<parseDate>>)_
+
+==== now
+
+`now` returns the current time (time.Time).
+
+**Signature**: `now() time.Time`
+
+==== parseDate
+
+`parseDate` returns the time.Time associated to the give string when interpreted using the given layout.
+
+**Signature**: `parseDate(layout string, value string) (time.Time, error)`
+
+=== JSON
+
+Functions related to JSON encoding and decoding.
+
+_(a total of **4 functions**: <<toJSON>>, <<parseJSON>>, <<jsonPath>>, and <<jsonPathWithDefault>>)_
+
+==== toJSON
+
+`toJSON` returns the given data JSON encoded.
+
+**Signature**: `toJSON(input interface{}) (string, error)`
+
+==== parseJSON
+
+`parseJSON` decodes the give JSON string.
+
+**Signature**: `parseJSON(jsonString string) (interface{}, error)`
+
+==== jsonPath
+
+`jsonPath` extracts data from a JSON struct using a JSON path expression.
+
+**Signature**: `jsonPath(expression string, jsonData interface{}) (interface{}, error)`
+
+==== jsonPathWithDefault
+
+`jsonPathWithDefault` extracts data from a JSON struct using a JSON path expression and a default value in case the expression does not match.
+
+**Signature**: `jsonPathWithDefault(expression string, defaultValue interface{}, jsonData interface{}) (interface{}, error)`
+
+
+
+=== Hashing
+
+Functions related to hashing.
+
+_(a total of **2 functions**: <<sha1>> and <<sha256>>)_
+
+==== sha1
+
+`sha1` returns the SHA1 hash of the string given.
+
+**Signature**: `sha1(input string) string`
+
+==== sha256
+
+`sha256` returns the SHA256 hash of the string given.
+
+**Signature**: `sha256(input string) string`
+
+
+
+=== Golang
+
+Functions related to go code.
+
+_(a total of **1 function**: <<asGoCode>>)_
+
+==== asGoCode
+
+`asGoCode` returns the give variable as Go code.
+
+**Signature**: `asGoCode(input interface{}) string`
+
+
+
+
+
+=== Print
+
+Printing helpers.
+
+_(a total of **3 functions**: <<printfLocalized>>, <<printInt>>, and <<printInt64>>)_
+
+==== printfLocalized
+
+`printfLocalized` returns the
+
+**Signature**: `printfLocalized(key message.Reference, data ...interface{}) (string, error)`
+
+==== printInt
+
+`printInt` returns the int value as a string.
+
+**Signature**: `printInt(value int) (string, error)`
+
+==== printInt64
+
+`printInt64` returns the int value as a string.
+
+**Signature**: `printInt64(value int64) (string, error)`
+
+
+
+=== Natural Language
+
+Functions related to NLP.
+
+_(a total of **7 functions**: <<plural>>, <<pluralInt64>>, <<pluralFloat>>, <<pluralWithNum>>, <<pluralInt64WithNum>>, <<pluralFloatWithNum>>, and <<joinText>>)_
+
+==== plural
+
+`plural` returns the correct string depending on an int value given.
+
+**Signature**: `plural(singular string, plural string, value int) string`
+
+==== pluralInt64
+
+`pluralInt64` returns the correct string depending on an int64 value given.
+
+**Signature**: `pluralInt64(singular string, plural string, value int64) string`
+
+==== pluralFloat
+
+`pluralFloat` returns the correct string depending on a float value given.
+
+**Signature**: `pluralFloat(singular string, plural string, value float64) string`
+
+==== pluralWithNum
+
+`pluralWithNum` returns the number and the correct string depending on an int value given.
+
+**Signature**: `pluralWithNum(singular string, plural string, value int) string`
+
+==== pluralInt64WithNum
+
+`pluralInt64WithNum` returns the number and the correct string depending on an int64 value given.
+
+**Signature**: `pluralInt64WithNum(singular string, plural string, value int64) string`
+
+==== pluralFloatWithNum
+
+`pluralFloatWithNum` returns the number and the correct string depending on a float value given.
+
+**Signature**: `pluralFloatWithNum(singular string, plural string, value float64) string`
+
+==== joinText
+
+`joinText` joins elements suitable for a human-readable text.
+
+**Signature**: `joinText(delim string, twoDelim string, lastDelim string, input []string) string`
+
+===== Example for joinText
+
+[source,golang,lineno]
+._link:documentation/functions/language/joinText/input[]_
+....
+{{ (makeStringList "A" "B" "C" "D").All | joinText ", " " and " ", and " }}
+....
+
+The output would be:
+
+[source,golang,lineno]
+._link:documentation/functions/language/joinText/output[]_
+....
+A, B, C, and D
+....
+
+=== Casting
+
+Functions related to casting between datatypes. Uses the https://github.com/spf13/cast library.
+
+_(a total of **5 functions**: <<toBool>>, <<toString>>, <<toInt>>, <<toFloat>>, and <<toStringSlice>>)_
+
+==== toBool
+
+`toBool` converts any given input to a bool.
+
+**Signature**: `toBool(input interface{}) bool`
+
+==== toString
+
+`toString` converts any given input to a string.
+
+**Signature**: `toString(input interface{}) string`
+
+==== toInt
+
+`toInt` converts any given input to an int.
+
+**Signature**: `toInt(input interface{}) int`
+
+==== toFloat
+
+`toFloat` converts any given content to a float64.
+
+**Signature**: `toFloat(input interface{}) float64`
+
+==== toStringSlice
+
+`toStringSlice` converts any given input to a string slice.
+
+**Signature**: `toStringSlice(input interface{}) []string`
+
+=== Assert
+
+You can assert the data types of values you are dealing with using these functions.
+
+_(a total of **3 functions**: <<assertString>>, <<assertInt>>, and <<assertFloat>>)_
+
+==== assertString
+
+`assertString` makes sure the given variable is of type string.
+
+**Signature**: `assertString(input interface{}) error`
+
+===== Example for assertString
+
+[source,golang,lineno]
+._link:documentation/functions/assert/assertString/input[]_
+....
+{{ assertString .Name }} /* will just continue */
+{{ assertString .Age }} /* will make the template evaluation fail */
+....
+
+==== assertInt
+
+`assertInt` makes sure the given variable is of type int.
+
+**Signature**: `assertInt(input interface{}) error`
+
+==== assertFloat
+
+`assertFloat` makes sure the given variable is of type float64.
+
+**Signature**: `assertFloat(input interface{}) error`
+

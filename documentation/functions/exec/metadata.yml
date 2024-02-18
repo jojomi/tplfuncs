@@ -1,0 +1,3 @@
+title: Exec
+description: Execute system commands. This is relying on https://github.com/jojomi/gorun.
+source: exec.go

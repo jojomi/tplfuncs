@@ -12,24 +12,24 @@ import (
 func DefaultHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		// functions for Bool
-		"firstNonNilBool": firstNonNilBoolFunction,
-		"firstSetBool":    firstNonNilBoolFunction,
-		"defaultBool":     firstNonNilBoolFunction,
+		"firstNonNilBool": firstNonNilBoolFunc,
+		"firstSetBool":    firstNonNilBoolFunc,
+		"defaultBool":     defaultBoolFunc,
 
 		// functions for Int
-		"firstNonNilInt": firstNonNilIntFunction,
-		"firstSetInt":    firstSetIntFunction,
-		"defaultInt":     firstSetIntFunction, // alias for firstSetInt
+		"firstNonNilInt": firstNonNilIntFunc,
+		"firstSetInt":    firstSetIntFunc,
+		"defaultInt":     defaultIntFunc, // alias for firstSetInt
 
 		// functions for String
-		"firstNonNilString": firstNonNilStringFunction,
-		"firstSetString":    firstSetStringFunction,
-		"defaultString":     firstSetStringFunction, // alias for firstSetString
+		"firstNonNilString": firstNonNilStringFunc,
+		"firstSetString":    firstSetStringFunc,
+		"defaultString":     defaultStringFunc, // alias for firstSetString
 
 		// functions for Float
-		"firstNonNilFloat": firstNonNilFloatFunction,
-		"firstSetFloat":    firstSetFloatFunction,
-		"defaultFloat":     firstSetFloatFunction, // alias for firstSetFloat
+		"firstNonNilFloat": firstNonNilFloatFunc,
+		"firstSetFloat":    firstSetFloatFunc,
+		"defaultFloat":     defaultFloatFunc, // alias for firstSetFloat
 	}
 }
 
@@ -38,7 +38,8 @@ func DefaultHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(DefaultHelpers())
 }
 
-func firstNonNilBoolFunction(inputs ...any) (bool, error) {
+// Doc: `firstNonNilBool` returns the first element in the given list of bool values that is not nil.
+func firstNonNilBoolFunc(inputs ...any) (bool, error) {
 	var empty bool
 
 	for _, input := range inputs {
@@ -58,7 +59,13 @@ func firstNonNilBoolFunction(inputs ...any) (bool, error) {
 	return empty, fmt.Errorf("all nil!")
 }
 
-func firstNonNilIntFunction(inputs ...any) (int, error) {
+// Doc: `defaultBool` is an alias for `firstNonNilBool`.
+func defaultBoolFunc(inputs ...any) (bool, error) {
+	return firstNonNilBoolFunc(inputs...)
+}
+
+// Doc: `firstNonNilInt` returns the first element in the given list of int values that is not nil.
+func firstNonNilIntFunc(inputs ...any) (int, error) {
 	var empty int
 
 	for _, input := range inputs {
@@ -78,7 +85,8 @@ func firstNonNilIntFunction(inputs ...any) (int, error) {
 	return empty, fmt.Errorf("all nil!")
 }
 
-func firstSetIntFunction(inputs ...any) (*int, error) {
+// Doc: `firstSetInt` returns the first element in the given list of int values that is not the empty value forInt.
+func firstSetIntFunc(inputs ...any) (*int, error) {
 	var empty int
 	for _, input := range inputs {
 		var realValue int
@@ -109,7 +117,13 @@ func firstSetIntFunction(inputs ...any) (*int, error) {
 	return nil, nil
 }
 
-func firstNonNilStringFunction(inputs ...any) (string, error) {
+// Doc: `defaultInt` is an alias for `firstSetInt`.
+func defaultIntFunc(inputs ...any) (*int, error) {
+	return firstSetIntFunc(inputs...)
+}
+
+// Doc: `firstNonNilString` returns the first element in the given list of string values that is not nil.
+func firstNonNilStringFunc(inputs ...any) (string, error) {
 	var empty string
 
 	for _, input := range inputs {
@@ -129,7 +143,8 @@ func firstNonNilStringFunction(inputs ...any) (string, error) {
 	return empty, fmt.Errorf("all nil!")
 }
 
-func firstSetStringFunction(inputs ...any) (*string, error) {
+// Doc: `firstSetString` returns the first element in the given list of string values that is not the empty value forString.
+func firstSetStringFunc(inputs ...any) (*string, error) {
 	var empty string
 	for _, input := range inputs {
 		var realValue string
@@ -160,7 +175,13 @@ func firstSetStringFunction(inputs ...any) (*string, error) {
 	return nil, nil
 }
 
-func firstNonNilFloatFunction(inputs ...any) (float64, error) {
+// Doc: `defaultString` is an alias for `firstSetString`.
+func defaultStringFunc(inputs ...any) (*string, error) {
+	return firstSetStringFunc(inputs...)
+}
+
+// Doc: `firstNonNilFloat` returns the first element in the given list of float values that is not nil.
+func firstNonNilFloatFunc(inputs ...any) (float64, error) {
 	var empty float64
 
 	for _, input := range inputs {
@@ -180,7 +201,8 @@ func firstNonNilFloatFunction(inputs ...any) (float64, error) {
 	return empty, fmt.Errorf("all nil!")
 }
 
-func firstSetFloatFunction(inputs ...any) (*float64, error) {
+// Doc: `firstSetFloat` returns the first element in the given list of float values that is not the empty value forFloat.
+func firstSetFloatFunc(inputs ...any) (*float64, error) {
 	var empty float64
 	for _, input := range inputs {
 		var realValue float64
@@ -209,4 +231,9 @@ func firstSetFloatFunction(inputs ...any) (*float64, error) {
 		}
 	}
 	return nil, nil
+}
+
+// Doc: `defaultFloat` is an alias for `firstSetFloat`.
+func defaultFloatFunc(inputs ...any) (*float64, error) {
+	return firstSetFloatFunc(inputs...)
 }

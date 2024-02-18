@@ -1,0 +1,3 @@
+a{{ trim " bc " -}}
+de
+{{- " fg" | trim }}hi

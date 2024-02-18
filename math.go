@@ -3,7 +3,6 @@
 package tplfuncs
 
 import (
-	"fmt"
 	htmlTemplate "html/template"
 	textTemplate "text/template"
 )
@@ -16,19 +15,14 @@ func MathHelpers() textTemplate.FuncMap {
 		"subtractInt":     subtractIntFunc,
 		"subtractFromInt": subtractFromIntFunc,
 		"multiplyInt":     multiplyIntFunc,
+		"divideIntBy":     divideIntByFunc,
 
 		// functions working on float values
 		"addFloat":          addFloatFunc,
 		"subtractFloat":     subtractFloatFunc,
 		"subtractFromFloat": subtractFromFloatFunc,
 		"multiplyFloat":     multiplyFloatFunc,
-
-		// deprecated
-		"floatAdd":   floatAddFunc,
-		"floatSub":   floatSubFunc,
-		"floatMul":   floatMulFunc,
-		"floatDiv":   floatDivFunc,
-		"floatDivBy": floatDivByFunc,
+		"divideFloatBy":     divideFloatByFunc,
 	}
 }
 
@@ -37,71 +31,7 @@ func MathHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(MathHelpers())
 }
 
-func floatDivFunc(values ...float64) (float64, error) {
-	if len(values) < 2 {
-		return 0, fmt.Errorf("not enough values given for floating point division: %v", values)
-	}
-	result := values[0]
-	for _, v := range values[1:] {
-		if v == 0 {
-			return 0, fmt.Errorf("floating point division by null with values %v", values)
-		}
-		result = result / v
-	}
-	return result, nil
-}
-
-func floatDivByFunc(values ...float64) (float64, error) {
-	count := len(values)
-	reversedValues := make([]float64, count)
-
-	for i, v := range values {
-		reversedValues[count-(i+1)] = v
-	}
-
-	return floatDivFunc(reversedValues...)
-}
-
-func floatAddFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum += v
-	}
-
-	return sum
-}
-
-func floatSubFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum -= v
-	}
-
-	return sum
-}
-
-func floatMulFunc(values ...float64) float64 {
-	if len(values) == 0 {
-		return 0.0
-	}
-
-	sum := values[0]
-	for _, v := range values[1:] {
-		sum *= v
-	}
-
-	return sum
-}
-
-// addIntFunc adds a number of int values and returns the total sum.
+// Doc: `addInt` adds a number of int values and returns the total sum.
 func addIntFunc(inputs ...int) int {
 	var sum int
 	for _, input := range inputs {
@@ -110,7 +40,7 @@ func addIntFunc(inputs ...int) int {
 	return sum
 }
 
-// subtractIntFunc subtracts a number of int values from the first one and returns the remaining value.
+// Doc: `subtractInt` subtracts a number of int values from the first one and returns the remaining value.
 func subtractIntFunc(start int, inputs ...int) int {
 	sum := start
 	for _, input := range inputs {
@@ -119,7 +49,7 @@ func subtractIntFunc(start int, inputs ...int) int {
 	return sum
 }
 
-// subtractFromIntFunc subtracts a number of int values from the last one and returns the remaining value.
+// Doc: `subtractFromInt` subtracts a number of int values from the last one and returns the remaining value.
 func subtractFromIntFunc(inputs ...int) int {
 	if len(inputs) == 0 {
 		return 0
@@ -131,16 +61,21 @@ func subtractFromIntFunc(inputs ...int) int {
 	return sum
 }
 
-// multiplyIntFunc multiplies a number of int values and returns the total value.
+// Doc: `multiplyInt` multiplies a number of int values and returns the total value.
 func multiplyIntFunc(inputs ...int) int {
-	var sum int
+	var sum int = 1
 	for _, input := range inputs {
 		sum *= input
 	}
 	return sum
 }
 
-// addFloatFunc adds a number of float64 values and returns the total sum.
+// Doc: `divideIntBy` divides a int value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
+func divideIntByFunc(divisor, value int) int {
+	return value / divisor
+}
+
+// Doc: `addFloat` adds a number of float64 values and returns the total sum.
 func addFloatFunc(inputs ...float64) float64 {
 	var sum float64
 	for _, input := range inputs {
@@ -149,7 +84,7 @@ func addFloatFunc(inputs ...float64) float64 {
 	return sum
 }
 
-// subtractFloatFunc subtracts a number of float64 values from the first one and returns the remaining value.
+// Doc: `subtractFloat` subtracts a number of float64 values from the first one and returns the remaining value.
 func subtractFloatFunc(start float64, inputs ...float64) float64 {
 	sum := start
 	for _, input := range inputs {
@@ -158,7 +93,7 @@ func subtractFloatFunc(start float64, inputs ...float64) float64 {
 	return sum
 }
 
-// subtractFromFloatFunc subtracts a number of float64 values from the last one and returns the remaining value.
+// Doc: `subtractFromFloat` subtracts a number of float64 values from the last one and returns the remaining value.
 func subtractFromFloatFunc(inputs ...float64) float64 {
 	if len(inputs) == 0 {
 		return 0
@@ -170,11 +105,16 @@ func subtractFromFloatFunc(inputs ...float64) float64 {
 	return sum
 }
 
-// multiplyFloatFunc multiplies a number of float64 values and returns the total value.
+// Doc: `multiplyFloat` multiplies a number of float64 values and returns the total value.
 func multiplyFloatFunc(inputs ...float64) float64 {
-	var sum float64
+	var sum float64 = 1
 	for _, input := range inputs {
 		sum *= input
 	}
 	return sum
+}
+
+// Doc: `divideFloatBy` divides a float64 value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
+func divideFloatByFunc(divisor, value float64) float64 {
+	return value / divisor
 }

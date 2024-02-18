@@ -17,7 +17,7 @@ func LoopHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(LoopHelpers())
 }
 
-// forFunction can be used like this: {{ range $i := for 0 14 }}
+// Doc: `for` allows for an int range of from and to values (both inclusive).
 func forFunction(from, to int) <-chan int {
 	ch := make(chan int)
 	go func() {

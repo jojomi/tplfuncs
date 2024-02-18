@@ -1,0 +1,4 @@
+first
+{{- space -}}
+second and
+{{- space 3 }} third word

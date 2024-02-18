@@ -1,0 +1,30 @@
+categories:
+  - spacing
+  - default
+  - string
+  - lines
+  - math
+  - exec
+  - io
+  - filesystem
+  - env
+  - network
+  - random
+  - semver
+  - date
+  - json
+  - yaml
+  - hash
+  - container
+  - golang
+  - html
+  - loop
+  - print
+  - convert
+  - language
+  - cast
+  - assert
+
+github:
+  repo:
+    url: https://github.com/jojomi/tplfuncs

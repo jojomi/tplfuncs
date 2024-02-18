@@ -17,9 +17,10 @@ func NetworkHelpers() textTemplate.FuncMap {
 
 // NetworkHelpersHTML returns an HTML template FuncMap with network functions
 func NetworkHelpersHTML() htmlTemplate.FuncMap {
-	return htmlTemplate.FuncMap(LineHelpers())
+	return htmlTemplate.FuncMap(LinesHelpers())
 }
 
+// Doc: `download` executes an HTTP GET request to a given URL and stores the result to a file.
 func downloadFunc(srcURL, filename string) error {
 	resp, err := http.Get(srcURL)
 	if err != nil {

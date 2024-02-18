@@ -19,6 +19,7 @@ func GolangHelpersHTML() htmlTemplate.FuncMap {
 	return htmlTemplate.FuncMap(GolangHelpers())
 }
 
+// Doc: `asGoCode` returns the give variable as Go code.
 func asGoCodeFunc(input interface{}) string {
 	return litter.Sdump(input)
 }

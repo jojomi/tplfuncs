@@ -19,13 +19,13 @@ func DefaultHelpers() textTemplate.FuncMap {
             {{ $noFirstSet := .no_first_set -}}
 
 	        // functions for {{ $ccName }}
-            "firstNonNil{{- $ccName -}}": firstNonNil{{- $ccName -}}Function,
+            "firstNonNil{{- $ccName -}}": firstNonNil{{- $ccName -}}Func,
             {{ if $noFirstSet -}}
-                "firstSet{{- $ccName -}}": firstNonNil{{- $ccName -}}Function,
-                "default{{- $ccName -}}": firstNonNil{{- $ccName -}}Function,
+                "firstSet{{- $ccName -}}": firstNonNil{{- $ccName -}}Func,
+                "default{{- $ccName -}}": default{{- $ccName -}}Func,
             {{- else -}}
-                "firstSet{{- $ccName -}}": firstSet{{- $ccName -}}Function,
-                "default{{- $ccName -}}": firstSet{{- $ccName -}}Function, // alias for firstSet{{- $ccName -}}
+                "firstSet{{- $ccName -}}": firstSet{{- $ccName -}}Func,
+                "default{{- $ccName -}}": default{{- $ccName -}}Func, // alias for firstSet{{- $ccName -}}
             {{ end -}}
     	    {{- newline -}}
         {{ end -}}
@@ -47,7 +47,8 @@ func DefaultHelpersHTML() htmlTemplate.FuncMap {
     {{ end -}}
     {{ $noFirstSet := .no_first_set -}}
 
-    func firstNonNil{{- $ccName -}}Function(inputs ...any) ({{ $value }}, error) {
+    // Doc: `firstNonNil{{- $ccName -}}` returns the first element in the given list of {{ .name }} values that is not nil.
+    func firstNonNil{{- $ccName -}}Func(inputs ...any) ({{ $value }}, error) {
         var empty {{ $value }}
 
         for _, input := range inputs {
@@ -67,8 +68,14 @@ func DefaultHelpersHTML() htmlTemplate.FuncMap {
         return empty, fmt.Errorf("all nil!")
     }
 
-    {{ if not $noFirstSet -}}
-        func firstSet{{- $ccName -}}Function(inputs ...any ) (*{{ $value }}, error) {
+    {{ if $noFirstSet -}}
+        // Doc: `default{{- $ccName -}}` is an alias for `firstNonNil{{- $ccName -}}`.
+        func default{{- $ccName -}}Func(inputs ...any) ({{ $value }}, error) {
+            return firstNonNil{{- $ccName -}}Func(inputs...)
+        }
+    {{ else -}}
+        // Doc: `firstSet{{- $ccName -}}` returns the first element in the given list of {{ .name }} values that is not the empty value for {{- $ccName -}}.
+        func firstSet{{- $ccName -}}Func(inputs ...any ) (*{{ $value }}, error) {
             var empty {{ $value }}
             for _, input := range inputs {
                 var realValue {{ $value }}
@@ -97,6 +104,11 @@ func DefaultHelpersHTML() htmlTemplate.FuncMap {
                 }
             }
             return nil, nil
+        }
+
+        // Doc: `default{{- $ccName -}}` is an alias for `firstSet{{- $ccName -}}`.
+        func default{{- $ccName -}}Func(inputs ...any) (*{{ $value }}, error) {
+            return firstSet{{- $ccName -}}Func(inputs...)
         }
     {{ end -}}
 {{ end -}}

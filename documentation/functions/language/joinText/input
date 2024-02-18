@@ -1,0 +1,1 @@
+{{ (makeStringList "A" "B" "C" "D").All | joinText ", " " and " ", and " }}
