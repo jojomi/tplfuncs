@@ -12,5 +12,5 @@ export SOURCE_CHECKER_PATH=${SOURCE_CHECKER_PATH}
 go build -o "${SOURCE_CHECKER_PATH}"
 popd > /dev/null
 
-io --input "{}" --template "tplfuncs_test.tpl.go" --output "../tplfuncs_test.go" --allow-exec && echo "Done."
+io --input "{}" --template "tplfuncs_test.tpl" --output "../tplfuncs_test.go" --allow-exec && echo "Done."
 rm -f "${SOURCE_CHECKER_PATH}"

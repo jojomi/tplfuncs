@@ -4,13 +4,14 @@ package tplfuncs
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"gopkg.in/yaml.v3"
 	"os"
 	"path"
 	"strings"
 	"testing"
 	"text/template"
+
+	"github.com/stretchr/testify/assert"
+	"gopkg.in/yaml.v3"
 )
 
 func renderTextTemplate(templateFilename, dataFilename string, funcMap template.FuncMap) (string, error) {
