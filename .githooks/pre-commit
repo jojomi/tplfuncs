@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+# does the code compile?
+printf ":: Compilation check...\n"
+TARGET_PATH=/tmp/_go-githook-compilation
+rm -f "${TARGET_PATH}"
+go build -o "${TARGET_PATH}" || exit 1
+rm -f "${TARGET_PATH}"
+echo 'OK.'
+
+# enforce gofumpt formatting
+printf "\n:: Formatting check...\n"
+if ! command -v gofumpt > /dev/null 2>&1; then
+    echo "Installing gofumpt..."
+    go install mvdan.cc/gofumpt@latest
+    echo "gofumpt installed successfully."
+fi
+# see https://github.com/mvdan/gofumpt/issues/114#issuecomment-1316842795
+if ! test -z "$(gofumpt -l -e . | tee /dev/stderr)"; then
+  echo '=> gofumpt reported issues, please fix them by executing "gofumpt -w -l ." and redo the commit. Aborted.'
+  exit 2
+fi
+echo 'OK.'
+
+# execute all tests
+printf "\n:: Executing tests...\n"
+go test -v ./... || exit 3
+echo 'OK.'
