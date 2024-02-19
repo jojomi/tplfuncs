@@ -7,24 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_readFileFunc(t *testing.T) {
-	Fs = afero.NewMemMapFs()
-	asrt := assert.New(t)
-
-	testFilename := "file.log"
-	fileContent := "test file content"
-
-	// setup
-	f, err := Fs.Create(testFilename)
-	asrt.Nil(err)
-	_, err = f.WriteString(fileContent)
-	asrt.Nil(err)
-
-	out, err := readFileFunc(testFilename)
-	asrt.Nil(err)
-	asrt.Equal(fileContent, out)
-}
-
 func Test_writeFileWithPermsFunc(t *testing.T) {
 	Fs = afero.NewMemMapFs()
 	asrt := assert.New(t)

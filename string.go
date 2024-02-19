@@ -152,6 +152,7 @@ func stringCleanFunc(replacement rune, input string) string {
 		// r != replacement
 		if activeReplacement {
 			result += string(replacement)
+			activeReplacement = false
 		}
 
 		result += string(r)
