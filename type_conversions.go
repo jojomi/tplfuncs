@@ -1,7 +1,6 @@
 package tplfuncs
 
 import (
-	"fmt"
 	htmlTemplate "html/template"
 	"strconv"
 	textTemplate "text/template"
@@ -20,11 +19,6 @@ func TypeConversionHelpersHTML() htmlTemplate.FuncMap {
 }
 
 // Doc: `atoi` returns the integer value in a string.
-func atoiFunc(input interface{}) (int, error) {
-	msg := fmt.Sprintf("not a string: %+v (type %T)", input, input)
-	err := assertTypeFunc[string](msg, input)
-	if err != nil {
-		return 0, err
-	}
-	return strconv.Atoi(input.(string))
+func atoiFunc(input string) (int, error) {
+	return strconv.Atoi(input)
 }
