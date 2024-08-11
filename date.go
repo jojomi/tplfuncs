@@ -10,6 +10,7 @@ import (
 func DateHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"now":       nowFunc,
+		"date":      dateFunc,
 		"parseDate": parseDateFunc,
 	}
 }
@@ -22,6 +23,11 @@ func DateHelpersHTML() htmlTemplate.FuncMap {
 // Doc: `now` returns the current time (time.Time).
 func nowFunc() time.Time {
 	return time.Now()
+}
+
+// Doc: `date` formats a time.Time instance.
+func dateFunc(layout string, t time.Time) string {
+	return t.Format(layout)
 }
 
 // Doc: `parseDate` returns the time.Time associated to the give string when interpreted using the given layout.
