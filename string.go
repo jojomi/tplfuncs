@@ -24,11 +24,12 @@ func StringHelpers() textTemplate.FuncMap {
 		"eqFold":          eqFoldFunc,
 
 		// string manipulation
-		"trim":          trimFunc,
-		"trimPrefix":    trimPrefixFunc,
-		"trimSuffix":    trimSuffixFunc,
-		"replace":       replaceFunc,
-		"regexpReplace": regexpReplaceFunc,
+		"trim":                 trimFunc,
+		"trimPrefix":           trimPrefixFunc,
+		"trimSuffix":           trimSuffixFunc,
+		"replace":              replaceFunc,
+		"regexpReplace":        regexpReplaceFunc,
+		"regexpReplaceLiteral": regexpReplaceLiteralFunc,
 
 		// string casing
 		"toUpperCase":      toUpperCaseFunc,
@@ -192,4 +193,10 @@ func replaceFunc(search, replacement, input string) string {
 func regexpReplaceFunc(regexpValue, replacement, input string) string {
 	r := regexp.MustCompile(regexpValue)
 	return r.ReplaceAllString(input, replacement)
+}
+
+// Doc: `regexpReplaceLiteral` returns a given string with all occurrences of the given regexp replaced by the literal replacement string.
+func regexpReplaceLiteralFunc(regexpValue, replacement, input string) string {
+	r := regexp.MustCompile(regexpValue)
+	return r.ReplaceAllLiteralString(input, replacement)
 }
