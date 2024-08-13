@@ -38,6 +38,7 @@ func StringHelpers() textTemplate.FuncMap {
 		"toLowerCamelCase": toLowerCamelCaseFunc,
 		"toSnakeCase":      toSnakeCaseFunc,
 		"toKebabCase":      toKebabCaseFunc,
+		"toTitleCase":      toTitleCaseFunc,
 
 		// clean string
 		"toFilename": stringToFilenameFunc,
@@ -112,6 +113,11 @@ func toSnakeCaseFunc(input string) string {
 // Doc: `toKebabCase` returns the given string converted to kebab case (https://en.wikipedia.org/wiki/Kebab_case).
 func toKebabCaseFunc(input string) string {
 	return strcase.ToKebab(input)
+}
+
+// Doc: `toTitleCase` returns the given string converted to title case (https://en.wikipedia.org/wiki/Title_case).
+func toTitleCaseFunc(input string) string {
+	return strings.ToTitle(input)
 }
 
 // Doc: `trimPrefix` returns the given string without the given prefix if there is one, otherwise the string is returned unchanged.
