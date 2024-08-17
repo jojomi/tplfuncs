@@ -27,6 +27,7 @@ func StringHelpers() textTemplate.FuncMap {
 		"trim":                 trimFunc,
 		"trimPrefix":           trimPrefixFunc,
 		"trimSuffix":           trimSuffixFunc,
+		"split":                splitFunc,
 		"replace":              replaceFunc,
 		"regexpReplace":        regexpReplaceFunc,
 		"regexpReplaceLiteral": regexpReplaceLiteralFunc,
@@ -58,6 +59,11 @@ func StringHelpersHTML() htmlTemplate.FuncMap {
 // Doc: `trim` removes all leading and trailing whitespace from the given string. Returns the string unchanged if neither exists.
 func trimFunc(input string) string {
 	return strings.TrimSpace(input)
+}
+
+// Doc: `split` splits the given input string by the given separator.
+func splitFunc(input, separator string) []string {
+	return strings.Split(input, separator)
 }
 
 // Doc: `eqFold` compares two strings disregarding their casing.
