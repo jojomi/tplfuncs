@@ -11,7 +11,8 @@ import (
 // NetworkHelpers returns a text template FuncMap with network functions
 func NetworkHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
-		"download": downloadFunc,
+		"download":   downloadFunc,
+		"includeUrl": includeUrlFunc,
 	}
 }
 
@@ -22,17 +23,27 @@ func NetworkHelpersHTML() htmlTemplate.FuncMap {
 
 // Doc: `download` executes an HTTP GET request to a given URL and stores the result to a file.
 func downloadFunc(srcURL, filename string) error {
-	resp, err := http.Get(srcURL)
+	body, err := includeUrlFunc(srcURL)
 	if err != nil {
 		return err
+	}
+
+	return os.WriteFile(filename, []byte(body), 0x640)
+}
+
+// Doc: `includeUrl` executes an HTTP GET request to a given URL and returns the result.
+func includeUrlFunc(srcURL string) (string, error) {
+	resp, err := http.Get(srcURL)
+	if err != nil {
+		return "", err
 	}
 	defer resp.Body.Close()
 
-	out, err := os.Create(filename)
+	// read the response body
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	_, err = io.Copy(out, resp.Body)
-	return err
+	return string(body), nil
 }
