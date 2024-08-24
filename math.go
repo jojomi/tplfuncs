@@ -4,6 +4,7 @@ package tplfuncs
 
 import (
 	htmlTemplate "html/template"
+	"math"
 	textTemplate "text/template"
 )
 
@@ -23,6 +24,7 @@ func MathHelpers() textTemplate.FuncMap {
 		"subtractFromFloat": subtractFromFloatFunc,
 		"multiplyFloat":     multiplyFloatFunc,
 		"divideFloatBy":     divideFloatByFunc,
+		"round":             roundFunc,
 	}
 }
 
@@ -117,4 +119,9 @@ func multiplyFloatFunc(inputs ...float64) float64 {
 // Doc: `divideFloatBy` divides a float64 value by another one. Note the inverted order to make `24 | divideBy 12` nicely expressive.
 func divideFloatByFunc(divisor, value float64) float64 {
 	return value / divisor
+}
+
+// Doc: `round` rounds a float64 value to the nearest integer value.
+func roundFunc(value float64) int {
+	return int(math.Round(value))
 }
