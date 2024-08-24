@@ -11,6 +11,8 @@ import (
 func GolangHelpers() textTemplate.FuncMap {
 	return textTemplate.FuncMap{
 		"asGoCode": asGoCodeFunc,
+
+		"emptyArray": emptyArrayFunc,
 	}
 }
 
@@ -22,4 +24,9 @@ func GolangHelpersHTML() htmlTemplate.FuncMap {
 // Doc: `asGoCode` returns the give variable as Go code.
 func asGoCodeFunc(input interface{}) string {
 	return litter.Sdump(input)
+}
+
+// Doc: `emptyArray` returns an empty []interface{}.
+func emptyArrayFunc() []interface{} {
+	return make([]interface{}, 0)
 }
