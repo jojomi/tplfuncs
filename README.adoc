@@ -2,7 +2,7 @@
 :toc: preamble
 :toclevels: 3
 
-`tplfuncs` is a collection of **114 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
+`tplfuncs` is a collection of **124 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
 
 link:https://goreportcard.com/report/github.com/jojomi/tplfuncs[image:https://goreportcard.com/badge/github.com/jojomi/tplfuncs]
 
@@ -15,7 +15,7 @@ link:https://pkg.go.dev/github.com/jojomi/tplfuncs[Documentation]
 
 == List of Functions
 
-There is a total number of **114 functions** contained in this package.
+There is a total number of **124 functions** contained in this package.
 
 === Spacing
 
@@ -190,7 +190,7 @@ _(a total of **11 functions**: <<firstNonNilBool>>, <<defaultBool>>, <<firstNonN
 
 Functions related to strings.
 
-_(a total of **20 functions**: <<trim>>, <<eqFold>>, <<eqIgnoreCase>>, <<stringContains>>, <<stringHasPrefix>>, <<stringHasSuffix>>, <<toUpperCase>>, <<toLowerCase>>, <<toCamelCase>>, <<toLowerCamelCase>>, <<toSnakeCase>>, <<toKebabCase>>, <<trimPrefix>>, <<trimSuffix>>, <<stringToFilename>>, <<stringToURL>>, <<diff>>, <<deHTML>>, <<replace>>, and <<regexpReplace>>)_
+_(a total of **25 functions**: <<trim>>, <<split>>, <<join>>, <<cat>>, <<eqFold>>, <<eqIgnoreCase>>, <<stringContains>>, <<stringHasPrefix>>, <<stringHasSuffix>>, <<toUpperCase>>, <<toLowerCase>>, <<toCamelCase>>, <<toLowerCamelCase>>, <<toSnakeCase>>, <<toKebabCase>>, <<toTitleCase>>, <<trimPrefix>>, <<trimSuffix>>, <<stringToFilename>>, <<stringToURL>>, <<diff>>, <<deHTML>>, <<replace>>, <<regexpReplace>>, and <<regexpReplaceLiteral>>)_
 
 ==== trim
 
@@ -215,6 +215,24 @@ The output would be:
 ....
 abcdefghi
 ....
+
+==== split
+
+`split` splits the given input string by the given separator.
+
+**Signature**: `split(input string, separator string) []string`
+
+==== join
+
+`join` joins the given string array using the given separator.
+
+**Signature**: `join(separator string, elems []string) string`
+
+==== cat
+
+`cat` concatenates the given input strings using the given separator.
+
+**Signature**: `cat(elems ...string) string`
 
 ==== eqFold
 
@@ -370,6 +388,12 @@ abc def
 
 **Signature**: `toKebabCase(input string) string`
 
+==== toTitleCase
+
+`toTitleCase` returns the given string converted to title case (https://en.wikipedia.org/wiki/Title_case).
+
+**Signature**: `toTitleCase(input string) string`
+
 ==== trimPrefix
 
 `trimPrefix` returns the given string without the given prefix if there is one, otherwise the string is returned unchanged.
@@ -449,6 +473,12 @@ my-domain
 `regexpReplace` returns a given string with all occurrences of the given regexp replaced by the replacement string.
 
 **Signature**: `regexpReplace(regexpValue string, replacement string, input string) string`
+
+==== regexpReplaceLiteral
+
+`regexpReplaceLiteral` returns a given string with all occurrences of the given regexp replaced by the literal replacement string.
+
+**Signature**: `regexpReplaceLiteral(regexpValue string, replacement string, input string) string`
 
 === Lines
 
@@ -600,7 +630,7 @@ Return the multiline input sorted alphabetically line by line.
 
 Mathematical functions.
 
-_(a total of **10 functions**: <<addInt>>, <<subtractInt>>, <<subtractFromInt>>, <<multiplyInt>>, <<divideIntBy>>, <<addFloat>>, <<subtractFloat>>, <<subtractFromFloat>>, <<multiplyFloat>>, and <<divideFloatBy>>)_
+_(a total of **11 functions**: <<addInt>>, <<subtractInt>>, <<subtractFromInt>>, <<multiplyInt>>, <<divideIntBy>>, <<addFloat>>, <<subtractFloat>>, <<subtractFromFloat>>, <<multiplyFloat>>, <<divideFloatBy>>, and <<round>>)_
 
 ==== addInt
 
@@ -662,11 +692,17 @@ _(a total of **10 functions**: <<addInt>>, <<subtractInt>>, <<subtractFromInt>>,
 
 **Signature**: `divideFloatBy(divisor float64, value float64) float64`
 
+==== round
+
+`round` rounds a float64 value to the nearest integer value.
+
+**Signature**: `round(value float64) int`
+
 === Exec
 
 Execute system commands. This is relying on https://github.com/jojomi/gorun.
 
-_(a total of **4 functions**: <<run>>, <<runSSH>>, <<runner>>, and <<localCommandFrom>>)_
+_(a total of **5 functions**: <<run>>, <<runSSH>>, <<runner>>, <<localCommandFrom>>, and <<sshCommandFrom>>)_
 
 ==== run
 
@@ -691,6 +727,12 @@ _(a total of **4 functions**: <<run>>, <<runSSH>>, <<runner>>, and <<localComman
 `localCommandFrom` makes a *gorun.LocalCommand from a string.
 
 **Signature**: `localCommandFrom(command string) *gorun.LocalCommand`
+
+==== sshCommandFrom
+
+`sshCommandFrom` makes a *gorun.SSHCommand from a host and command.
+
+**Signature**: `sshCommandFrom(host string, command string) *gorun.SSHCommand`
 
 === IO
 
@@ -780,13 +822,19 @@ _(a total of **3 functions**: <<env>>, <<envIsSet>>, and <<envEq>>)_
 
 Functions related to network operations.
 
-_(a total of **1 function**: <<download>>)_
+_(a total of **2 functions**: <<download>> and <<includeUrl>>)_
 
 ==== download
 
 `download` executes an HTTP GET request to a given URL and stores the result to a file.
 
 **Signature**: `download(srcURL string, filename string) error`
+
+==== includeUrl
+
+`includeUrl` executes an HTTP GET request to a given URL and returns the result.
+
+**Signature**: `includeUrl(srcURL string) (string, error)`
 
 === Random
 
@@ -834,13 +882,19 @@ _(a total of **3 functions**: <<parseSemver>>, <<semverToMajor>>, and <<semverTo
 
 Functions related to date and time.
 
-_(a total of **2 functions**: <<now>> and <<parseDate>>)_
+_(a total of **3 functions**: <<now>>, <<date>>, and <<parseDate>>)_
 
 ==== now
 
 `now` returns the current time (time.Time).
 
 **Signature**: `now() time.Time`
+
+==== date
+
+`date` formats a time.Time instance.
+
+**Signature**: `date(layout string, t time.Time) string`
 
 ==== parseDate
 
@@ -904,13 +958,19 @@ _(a total of **2 functions**: <<sha1>> and <<sha256>>)_
 
 Functions related to go code.
 
-_(a total of **1 function**: <<asGoCode>>)_
+_(a total of **2 functions**: <<asGoCode>> and <<emptyArray>>)_
 
 ==== asGoCode
 
 `asGoCode` returns the give variable as Go code.
 
 **Signature**: `asGoCode(input interface{}) string`
+
+==== emptyArray
+
+`emptyArray` returns an empty []interface{}.
+
+**Signature**: `emptyArray() []interface{}`
 
 
 
