@@ -28,6 +28,8 @@ func StringHelpers() textTemplate.FuncMap {
 		"trimPrefix":           trimPrefixFunc,
 		"trimSuffix":           trimSuffixFunc,
 		"split":                splitFunc,
+		"join":                 joinFunc,
+		"cat":                  catFunc,
 		"replace":              replaceFunc,
 		"regexpReplace":        regexpReplaceFunc,
 		"regexpReplaceLiteral": regexpReplaceLiteralFunc,
@@ -64,6 +66,16 @@ func trimFunc(input string) string {
 // Doc: `split` splits the given input string by the given separator.
 func splitFunc(input, separator string) []string {
 	return strings.Split(input, separator)
+}
+
+// Doc: `join` joins the given string array using the given separator.
+func joinFunc(separator string, elems []string) string {
+	return strings.Join(elems, separator)
+}
+
+// Doc: `cat` concatenates the given input strings using the given separator.
+func catFunc(elems ...string) string {
+	return strings.Join(elems, "")
 }
 
 // Doc: `eqFold` compares two strings disregarding their casing.
