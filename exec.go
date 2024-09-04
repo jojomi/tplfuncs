@@ -28,6 +28,7 @@ func ExecHelpers() textTemplate.FuncMap {
 		"runSSH":           runSSHFunc,
 		"runner":           runnerFunc,
 		"localCommandFrom": localCommandFromFunc,
+		"sshCommandFrom":   sshCommandFromFunc,
 	}
 }
 
@@ -139,4 +140,10 @@ func runnerFunc() *gorun.Runner {
 // Doc: `localCommandFrom` makes a *gorun.LocalCommand from a string.
 func localCommandFromFunc(command string) *gorun.LocalCommand {
 	return gorun.LocalCommandFrom(command)
+}
+
+// Doc: `sshCommandFrom` makes a *gorun.SSHCommand from a host and command.
+func sshCommandFromFunc(host, command string) *gorun.SSHCommand {
+	c := gorun.LocalCommandFrom(command)
+	return gorun.NewSSHCommandFrom(host, c)
 }
