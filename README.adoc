@@ -2,7 +2,7 @@
 :toc: preamble
 :toclevels: 3
 
-`tplfuncs` is a collection of **124 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
+`tplfuncs` is a collection of **126 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
 
 link:https://goreportcard.com/report/github.com/jojomi/tplfuncs[image:https://goreportcard.com/badge/github.com/jojomi/tplfuncs]
 
@@ -15,7 +15,7 @@ link:https://pkg.go.dev/github.com/jojomi/tplfuncs[Documentation]
 
 == List of Functions
 
-There is a total number of **124 functions** contained in this package.
+There is a total number of **126 functions** contained in this package.
 
 === Spacing
 
@@ -190,7 +190,7 @@ _(a total of **11 functions**: <<firstNonNilBool>>, <<defaultBool>>, <<firstNonN
 
 Functions related to strings.
 
-_(a total of **25 functions**: <<trim>>, <<split>>, <<join>>, <<cat>>, <<eqFold>>, <<eqIgnoreCase>>, <<stringContains>>, <<stringHasPrefix>>, <<stringHasSuffix>>, <<toUpperCase>>, <<toLowerCase>>, <<toCamelCase>>, <<toLowerCamelCase>>, <<toSnakeCase>>, <<toKebabCase>>, <<toTitleCase>>, <<trimPrefix>>, <<trimSuffix>>, <<stringToFilename>>, <<stringToURL>>, <<diff>>, <<deHTML>>, <<replace>>, <<regexpReplace>>, and <<regexpReplaceLiteral>>)_
+_(a total of **27 functions**: <<trim>>, <<split>>, <<join>>, <<cat>>, <<eqFold>>, <<eqIgnoreCase>>, <<stringContains>>, <<stringHasPrefix>>, <<stringHasSuffix>>, <<toUpperCase>>, <<toLowerCase>>, <<toCamelCase>>, <<toLowerCamelCase>>, <<toSnakeCase>>, <<toKebabCase>>, <<toTitleCase>>, <<trimPrefix>>, <<trimSuffix>>, <<stringToFilename>>, <<stringToURL>>, <<diff>>, <<deHTML>>, <<replace>>, <<regexpReplace>>, <<regexpReplaceLiteral>>, <<isSingleLine>>, and <<isMultiline>>)_
 
 ==== trim
 
@@ -479,6 +479,18 @@ my-domain
 `regexpReplaceLiteral` returns a given string with all occurrences of the given regexp replaced by the literal replacement string.
 
 **Signature**: `regexpReplaceLiteral(regexpValue string, replacement string, input string) string`
+
+==== isSingleLine
+
+`isSingleLine` returns true iff a string does not contain a newline character.
+
+**Signature**: `isSingleLine(input string) bool`
+
+==== isMultiline
+
+`isMultiline` returns true iff a string does contain a newline character.
+
+**Signature**: `isMultiline(input string) bool`
 
 === Lines
 

@@ -224,3 +224,13 @@ func regexpReplaceLiteralFunc(regexpValue, replacement, input string) string {
 	r := regexp.MustCompile(regexpValue)
 	return r.ReplaceAllLiteralString(input, replacement)
 }
+
+// Doc: `isSingleLine` returns true iff a string does not contain a newline character.
+func isSingleLineFunc(input string) bool {
+	return !strings.Contains(input, "\n")
+}
+
+// Doc: `isMultiline` returns true iff a string does contain a newline character.
+func isMultilineFunc(input string) bool {
+	return strings.Contains(input, "\n")
+}

@@ -207,3 +207,65 @@ func Test_stringCleanFunc(t *testing.T) {
 		})
 	}
 }
+
+func Test_stringIsMultiline(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "single line",
+			args: args{
+				input: "single line",
+			},
+			want: false,
+		},
+		{
+			name: "multiline",
+			args: args{
+				input: "multi\nline",
+			},
+			want: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, isMultilineFunc(tt.args.input), "isMultilineFunc(%v)", tt.args.input)
+		})
+	}
+}
+
+func Test_stringIsSingleLine(t *testing.T) {
+	type args struct {
+		input string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "single line",
+			args: args{
+				input: "single line",
+			},
+			want: true,
+		},
+		{
+			name: "multiline",
+			args: args{
+				input: "multi\nline",
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equalf(t, tt.want, isSingleLineFunc(tt.args.input), "isSingleLineFunc(%v)", tt.args.input)
+		})
+	}
+}

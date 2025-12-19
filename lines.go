@@ -33,6 +33,8 @@ func LinesHelpers() textTemplate.FuncMap {
 		"indentSpaceLines":    indentSpaceLinesFunc,
 		"indentTabLines":      indentTabLinesFunc,
 		"prefixLines":         prefixLinesFunc,
+		"isSingleLine":        isSingleLineFunc,
+		"isMultiline":         isMultilineFunc,
 	}
 }
 
