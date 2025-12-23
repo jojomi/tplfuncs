@@ -3,6 +3,7 @@ package container
 import (
 	"fmt"
 	"regexp"
+	"strings"
 )
 
 func (x *StringList) First(count int) *StringList {
@@ -74,6 +75,29 @@ func (x *StringList) SubsetRegexp(startRegexp, endRegexp string) (*StringList, e
 	}
 	if end == -1 {
 		return x, fmt.Errorf("could not find end line matching regexp %s", endRegexp)
+	}
+
+	x.strings = x.strings[start:end]
+	return x, nil
+}
+
+// SubsetContainsAfter returns the first line with the given subset string, expanded to _count_ lines in total.
+func (x *StringList) SubsetContainsAfter(substring string, count int) (*StringList, error) {
+	var (
+		start = -1
+		end   = -1
+	)
+
+	for i, elem := range x.strings {
+		if start < 0 && strings.Contains(elem, substring) {
+			start = i
+			end = i + count
+			continue
+		}
+	}
+
+	if start == -1 {
+		return x, fmt.Errorf("could not find start line matching substring %s", substring)
 	}
 
 	x.strings = x.strings[start:end]

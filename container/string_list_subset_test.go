@@ -167,3 +167,60 @@ func TestStringList_SubsetRegexp(t *testing.T) {
 		})
 	}
 }
+
+func TestStringList_SubsetContainsAfter(t *testing.T) {
+	type fields struct {
+		strings []string
+	}
+	type args struct {
+		substring string
+		count     int
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    []string
+		wantErr bool
+	}{
+		{
+			name: "basic",
+			fields: fields{
+				strings: []string{"abc", "def", "ghi", "jkl"},
+			},
+			args: args{
+				substring: "ef",
+				count:     1,
+			},
+			want:    []string{"def"},
+			wantErr: false,
+		},
+		{
+			name: "first",
+			fields: fields{
+				strings: []string{"abc", "def", "ghi", "jkl"},
+			},
+			args: args{
+				substring: "a",
+				count:     3,
+			},
+			want:    []string{"abc", "def", "ghi"},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			x := &StringList{
+				strings: tt.fields.strings,
+			}
+			got, err := x.SubsetContainsAfter(tt.args.substring, tt.args.count)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("SubsetContainsAfter() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got.All(), tt.want) {
+				t.Errorf("SubsetContainsAfter() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
