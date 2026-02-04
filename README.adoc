@@ -2,7 +2,7 @@
 :toc: preamble
 :toclevels: 3
 
-`tplfuncs` is a collection of **126 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
+`tplfuncs` is a collection of **128 useful functions** for link:https://golang.org[Go] link:https://pkg.go.dev/text/template[templates].
 
 link:https://goreportcard.com/report/github.com/jojomi/tplfuncs[image:https://goreportcard.com/badge/github.com/jojomi/tplfuncs]
 
@@ -15,7 +15,7 @@ link:https://pkg.go.dev/github.com/jojomi/tplfuncs[Documentation]
 
 == List of Functions
 
-There is a total number of **126 functions** contained in this package.
+There is a total number of **128 functions** contained in this package.
 
 === Spacing
 
@@ -496,7 +496,7 @@ my-domain
 
 Functions related to multiline strings.
 
-_(a total of **20 functions**: <<lineOrErr>>, <<line>>, <<sortLines>>, <<head>>, <<skipHead>>, <<tail>>, <<skipTail>>, <<trimLines>>, <<trimAll>>, <<notMatch>>, <<match>>, <<withoutEmptyLines>>, <<withoutLineComments>>, <<wrapLines>>, <<indentSpaceLines>>, <<prefixLines>>, <<indentTabLines>>, <<getLines>>, <<asString>>, and <<regexpReplaceLine>>)_
+_(a total of **22 functions**: <<lineOrErr>>, <<line>>, <<sortLines>>, <<head>>, <<skipHead>>, <<tail>>, <<skipTail>>, <<trimLines>>, <<trimAll>>, <<notMatch>>, <<match>>, <<withoutEmptyLines>>, <<withoutLineComments>>, <<wrapLines>>, <<indentSpaceLines>>, <<prefixLines>>, <<indentTabLines>>, <<getLines>>, <<asString>>, <<regexpReplaceLine>>, <<filterLinesPrefix>>, and <<withoutLinesPrefix>>)_
 
 ==== lineOrErr
 
@@ -637,6 +637,18 @@ Return the multiline input sorted alphabetically line by line.
 `regexpReplaceLine` returns a string from a multiline string where the regexp given is executed on every single line and the replacement executed if there was one or more matches.
 
 **Signature**: `regexpReplaceLine(regExp string, replacement string, input string) string`
+
+==== filterLinesPrefix
+
+`filterLinesPrefix` returns only lines that have the given prefix
+
+**Signature**: `filterLinesPrefix(prefix string, input string) string`
+
+==== withoutLinesPrefix
+
+`withoutLinesPrefix` removes all lines that have the given prefix
+
+**Signature**: `withoutLinesPrefix(prefix string, input string) string`
 
 === Math
 

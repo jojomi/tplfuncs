@@ -35,6 +35,8 @@ func LinesHelpers() textTemplate.FuncMap {
 		"prefixLines":         prefixLinesFunc,
 		"isSingleLine":        isSingleLineFunc,
 		"isMultiline":         isMultilineFunc,
+		"filterLinesPrefix":   filterLinesPrefixFunc,
+		"withoutLinesPrefix":  withoutLinesPrefixFunc,
 	}
 }
 
@@ -248,4 +250,32 @@ func regexpReplaceLineFunc(regExp, replacement, input string) string {
 	}
 
 	return asString(lines)
+}
+
+// Doc: `filterLinesPrefix` returns only lines that have the given prefix
+func filterLinesPrefixFunc(prefix, input string) string {
+	lines := getLines(input)
+
+	result := make([]string, 0, len(lines)/2)
+	for _, line := range lines {
+		if strings.HasPrefix(line, prefix) {
+			result = append(result, line)
+		}
+	}
+
+	return asString(result)
+}
+
+// Doc: `withoutLinesPrefix` removes all lines that have the given prefix
+func withoutLinesPrefixFunc(prefix, input string) string {
+	lines := getLines(input)
+
+	result := make([]string, 0, len(lines)/2)
+	for _, line := range lines {
+		if !strings.HasPrefix(line, prefix) {
+			result = append(result, line)
+		}
+	}
+
+	return asString(result)
 }
