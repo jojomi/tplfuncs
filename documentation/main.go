@@ -153,7 +153,7 @@ func printFunctionData(filePath string) {
 }
 
 func errOut(err error, exitCode int) {
-	fmt.Fprintf(os.Stderr, err.Error())
+	fmt.Fprint(os.Stderr, err.Error())
 	os.Exit(exitCode)
 }
 

@@ -1,6 +1,6 @@
 module github.com/jojomi/tplfuncs
 
-go 1.23.0
+go 1.24.0
 
 toolchain go1.24.5
 
@@ -17,10 +17,10 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/sanity-io/litter v1.5.8
-	github.com/spf13/afero v1.14.0
-	github.com/spf13/cast v1.9.2
-	github.com/stretchr/testify v1.10.0
-	golang.org/x/text v0.28.0
+	github.com/spf13/afero v1.15.0
+	github.com/spf13/cast v1.10.0
+	github.com/stretchr/testify v1.11.1
+	golang.org/x/text v0.33.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -32,5 +32,5 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/shopspring/decimal v1.4.0 // indirect
-	golang.org/x/sys v0.35.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
 )
